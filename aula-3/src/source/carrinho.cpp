@@ -18,19 +18,14 @@ CARRINHO::CARRINHO()
 
 CARRINHO::~CARRINHO()
 {
-    stop();
 }
 
 void CARRINHO::stop()
 {
-    softPwmWrite(this->pins.in1, this->speed.stopspeed);
-    softPwmWrite(this->pins.in2, this->speed.stopspeed);
-    softPwmWrite(this->pins.in3, this->speed.stopspeed);
-    softPwmWrite(this->pins.in4, this->speed.stopspeed);
-    digitalWrite(this->pins.in1, LOW);
-    digitalWrite(this->pins.in2, LOW);
-    digitalWrite(this->pins.in3, LOW);
-    digitalWrite(this->pins.in4, LOW);
+    softPwmWrite(this->pins.in1, this->speed.overdrive);
+    softPwmWrite(this->pins.in2, this->speed.overdrive);
+    softPwmWrite(this->pins.in3, this->speed.overdrive);
+    softPwmWrite(this->pins.in4, this->speed.overdrive);
 }
 
 void CARRINHO::setMotor(int motor, int direction) {
@@ -38,7 +33,7 @@ void CARRINHO::setMotor(int motor, int direction) {
         case motors::left_motor:
             switch (direction) {
                 case directions::forward:
-                    softPwmWrite(this->pins.in1, this->speed.overdrive);
+                    softPwmWrite(this->pins.in1, this->speed.fullspeed);
                     softPwmWrite(this->pins.in2, this->speed.stopspeed);
                     break;
                 case directions::backward:
@@ -50,8 +45,8 @@ void CARRINHO::setMotor(int motor, int direction) {
                     softPwmWrite(this->pins.in2, this->speed.overdrive);
                     break;
                 case directions::left:
-                    softPwmWrite(this->pins.in1, this->speed.fullspeed);
-                    softPwmWrite(this->pins.in2, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in1, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in2, this->speed.fullspeed);
                     break;
                 case directions::right:
                     softPwmWrite(this->pins.in1, this->speed.stopspeed);
@@ -74,13 +69,12 @@ void CARRINHO::setMotor(int motor, int direction) {
                     softPwmWrite(this->pins.in2, this->speed.stopspeed);
                     break;
                 default:
-                    stop();
                     break;
             }
         case motors::right_motor:
             switch (direction) {
                 case directions::forward:
-                    softPwmWrite(this->pins.in3, this->speed.overdrive);
+                    softPwmWrite(this->pins.in3, this->speed.fullspeed);
                     softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
                 case directions::backward:
@@ -92,8 +86,8 @@ void CARRINHO::setMotor(int motor, int direction) {
                     softPwmWrite(this->pins.in4, this->speed.overdrive);
                     break;
                 case directions::left:
-                    softPwmWrite(this->pins.in3, this->speed.stopspeed);
-                    softPwmWrite(this->pins.in4, this->speed.fullspeed);
+                    softPwmWrite(this->pins.in3, this->speed.fullspeed);
+                    softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
                 case directions::right:
                     softPwmWrite(this->pins.in3, this->speed.fullspeed);
@@ -116,7 +110,6 @@ void CARRINHO::setMotor(int motor, int direction) {
                     softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
                 default:
-                    stop();
                     break;
             }      
     }

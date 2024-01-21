@@ -3,7 +3,9 @@
 // Aluno 2: Luís Henrique de Almeida Fernandes - 11820030
 #include "server.hpp"
 #include "carrinho.hpp"
+#include <stdio.h>
 using namespace connection;
+using namespace std;
 
 enum State {
     DEFAULT,
@@ -48,40 +50,51 @@ int main(int argc, char *argv[]) {
             server.sendImgComp(frame);
 
             if (state >= static_cast<uint32_t>(State::DEFAULT) && state <= static_cast<uint32_t>(State::DIAG_INF_RIGHT)) {
+                std::cout << "State: " << state << std::endl;
                 switch (static_cast<State>(state)) {
                 case UP:
+                    std::cout << "Pra frente" << std::endl;
                     carrinho.move_forward();
                     break;
                 case DOWN:
+                    std::cout << "Pra trás" << std::endl;
                     carrinho.move_backward();
                     break;
                 case LEFT_180:
+                    std::cout << "Pra esquerda" << std::endl;
                     carrinho.move_left();
                     break;
                 case RIGHT_180:
+                    std::cout << "Pra direita" << std::endl;
                     carrinho.move_right();
                     break;
                 case STOP:
+                    std::cout << "Para" << std::endl;
                     carrinho.stop();
                     break;
                 case DIAG_SUP_LEFT:
+                    std::cout << "Pra frente diagonal esquerda" << std::endl;
                     carrinho.move_top_left();
                     break;
                 case DIAG_SUP_RIGHT:
+                    std::cout << "Pra frente diagonal direita" << std::endl;
                     carrinho.move_top_right();
                     break;
                 case DIAG_INF_LEFT:
+                    std::cout << "Pra trás diagonal esquerda" << std::endl;
                     carrinho.move_bottom_left();
                     break;
                 case DIAG_INF_RIGHT:
+                    std::cout << "Pra trás diagonal direita" << std::endl;
                     carrinho.move_bottom_right();
                     break;
-                default:
+                case DEFAULT:
+                    std::cout << "Default" << std::endl;
                     carrinho.stop();
                     break;
+                default:
+                    break;
                 }
-            } else {
-                carrinho.stop();
             }
         }
     }

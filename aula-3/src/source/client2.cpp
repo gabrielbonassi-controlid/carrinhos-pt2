@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
-        screen = grudaH(janela, image)
+        screen = grudaH(janela, image, 0, cinza);
         imshow("janela", screen);
         //client.sendUint(1) // confirma recebimento da imagem
         if (recording) {
@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
                 if (argv[3][0] == 't')
                     vo << screen;
                 else if (argv[3][0] == 'c')
-                    vo << frame;
+                    vo << image;
             }
         }
     }

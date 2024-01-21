@@ -2,11 +2,12 @@
 // Classe CARRINHO
 // Aluno 1: Gabriel Lujan Bonassi - NUSP: 11256816
 // Aluno 2: Luís Henrique de Almeida Fernandes - 11820030
-#ifndef CARRINHO_HPP
-#define CARRINHO_HPP
+#ifndef CARRINHO_HPP_
+#define CARRINHO_HPP_
 
 #include <wiringPi.h>
 #include <softPwm.h>
+#include <cekeikon.h>
 
 class CARRINHO
 {
@@ -21,30 +22,29 @@ class CARRINHO
         const int fullspeed = 40;
         const int overdrive = 100;
         const int halfspeed = 20;
-        const int stop = 0;
+        const int stopspeed = 0;
     };
 
-    struct s_directions {
-        const int forward = 8;
-        const int backward = 2;
-        const int stop = 5;
-        const int left = 4;
-        const int right = 6;
-        const int bottom_left = 1;
-        const int bottom_right = 3;
-        const int top_left = 7;
-        const int top_right = 9;
+    enum directions {
+        forward = 8,
+        backward = 2,
+        brake = 5,
+        left = 4,
+        right = 6,
+        bottom_left = 1,
+        bottom_right = 3,
+        top_left = 7,
+        top_right = 9,
+
     };
 
-    struct s_motors {
-        const int left = 0;
-        const int right = 1;
+    enum motors {
+        left_motor = 1,
+        right_motor = 2
     };
 public:
-    s_motors motors;
     s_pins pins;
     s_speed speed;
-    s_directions directions;
     /*
      * Constructor
      */
@@ -57,13 +57,15 @@ public:
     ~CARRINHO();
 
     void stop();
-    void setMotor(s_motors& motor, s_directions& direction);
-    void forward();
-    void backward();
-    void left();
-    void right();
-    void bottom_left();
-    void bottom_right();
-    void top_left();
-    void top_right();
-}
+    void setMotor(int motor, int direction);
+    void move_forward();
+    void move_backward();
+    void move_left();
+    void move_right();
+    void move_bottom_left();
+    void move_bottom_right();
+    void move_top_left();
+    void move_top_right();
+};
+
+#endif // CARRINHO_HPP_

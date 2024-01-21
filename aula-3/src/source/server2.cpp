@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         erro("Erro ao abrir a camera\n");
     }
     Mat_<COR> frame;
-    uint32_t r, state;
+    uint32_t r, state = 0;
     while (true) {
         server.receiveUint(r);
         server.receiveUint(state);
@@ -45,49 +45,43 @@ int main(int argc, char *argv[]) {
             {
                 erro("Falha ao capturar frame\n");
             }
-
-            // write state on frame
-            putText(frame, to_string(state), Point(10, 20), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 0), 1, 16);
             server.sendImgComp(frame);
 
             if (state >= static_cast<uint32_t>(State::DEFAULT) && state <= static_cast<uint32_t>(State::DIAG_INF_RIGHT)) {
-                switch (static_cast<State>state) {
+                switch (static_cast<State>(state)) {
                 case UP:
-                    carrinho.forward();
+                    carrinho.move_forward();
                     break;
                 case DOWN:
-                    carrinho.backward();
+                    carrinho.move_backward();
                     break;
                 case LEFT_180:
-                    carrinho.left();
+                    carrinho.move_left();
                     break;
                 case RIGHT_180:
-                    carrinho.right();
+                    carrinho.move_right();
                     break;
                 case STOP:
                     carrinho.stop();
                     break;
                 case DIAG_SUP_LEFT:
-                    carrinho.top_left();
+                    carrinho.move_top_left();
                     break;
                 case DIAG_SUP_RIGHT:
-                    carrinho.top_right();
+                    carrinho.move_top_right();
                     break;
                 case DIAG_INF_LEFT:
-                    carrinho.bottom_left();
+                    carrinho.move_bottom_left();
                     break;
                 case DIAG_INF_RIGHT:
-                    carrinho.bottom_right();
+                    carrinho.move_bottom_right();
                     break;
                 default:
                     carrinho.stop();
-                    erro("Estado inválido\n");
                     break;
                 }
             } else {
                 carrinho.stop();
-                erro("Estado inválido\n");
-                exit(0);
             }
         }
     }

@@ -6,13 +6,13 @@
 CARRINHO::CARRINHO()
 {
     wiringPiSetup();
-    if (softPwmCreate(pins.in1, 0, 100))
+    if (softPwmCreate(this->pins.in1, 0, 100))
         erro("ERRO PIN3\n");
-    if (softPwmCreate(pins.in2, 0, 100))
+    if (softPwmCreate(this->pins.in2, 0, 100))
         erro("ERRO PIN4\n");
-    if (softPwmCreate(pins.in3, 0, 100))
+    if (softPwmCreate(this->pins.in3, 0, 100))
         erro("ERRO PIN9\n");
-    if (softPwmCreate(pins.in4, 0, 100))
+    if (softPwmCreate(this->pins.in4, 0, 100))
         erro("ERRO PIN12\n");
 }
 
@@ -23,97 +23,97 @@ CARRINHO::~CARRINHO()
 
 void CARRINHO::stop()
 {
-    softPwmWrite(pins.in1, speed.stop);
-    softPwmWrite(pins.in2, speed.stop);
-    softPwmWrite(pins.in3, speed.stop);
-    softPwmWrite(pins.in4, speed.stop);
-    digitalWrite(pins.in1, LOW);
-    digitalWrite(pins.in2, LOW);
-    digitalWrite(pins.in3, LOW);
-    digitalWrite(pins.in4, LOW);
+    softPwmWrite(this->pins.in1, this->speed.stopspeed);
+    softPwmWrite(this->pins.in2, this->speed.stopspeed);
+    softPwmWrite(this->pins.in3, this->speed.stopspeed);
+    softPwmWrite(this->pins.in4, this->speed.stopspeed);
+    digitalWrite(this->pins.in1, LOW);
+    digitalWrite(this->pins.in2, LOW);
+    digitalWrite(this->pins.in3, LOW);
+    digitalWrite(this->pins.in4, LOW);
 }
 
-void CARRINHO::setMotor(s_motors& motor, s_directions& direction) {
+void CARRINHO::setMotor(int motor, int direction) {
     switch (motor) {
-        case motors.left:
+        case motors::left_motor:
             switch (direction) {
-                case directions.forward:
-                    softPwmWrite(pins.in1, speed.overdrive);
-                    softPwmWrite(pins.in2, speed.stop);
+                case directions::forward:
+                    softPwmWrite(this->pins.in1, this->speed.overdrive);
+                    softPwmWrite(this->pins.in2, this->speed.stopspeed);
                     break;
-                case directions.backward:
-                    softPwmWrite(pins.in1, speed.stop);
-                    softPwmWrite(pins.in2, speed.fullspeed);
+                case directions::backward:
+                    softPwmWrite(this->pins.in1, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in2, this->speed.fullspeed);
                     break;
-                case directions.stop:
-                    softPwmWrite(pins.in1, speed.overdrive);
-                    softPwmWrite(pins.in2, speed.overdrive);
+                case directions::brake:
+                    softPwmWrite(this->pins.in1, this->speed.overdrive);
+                    softPwmWrite(this->pins.in2, this->speed.overdrive);
                     break;
-                case directions.left:
-                    softPwmWrite(pins.in1, speed.fullspeed);
-                    softPwmWrite(pins.in2, speed.stop);
+                case directions::left:
+                    softPwmWrite(this->pins.in1, this->speed.fullspeed);
+                    softPwmWrite(this->pins.in2, this->speed.stopspeed);
                     break;
-                case directions.right:
-                    softPwmWrite(pins.in1, speed.stop);
-                    softPwmWrite(pins.in2, speed.fullspeed);
+                case directions::right:
+                    softPwmWrite(this->pins.in1, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in2, this->speed.fullspeed);
                     break;
-                case directions.bottom_left:
-                    softPwmWrite(pins.in1, speed.stop);
-                    softPwmWrite(pins.in2, speed.fullspeed);
+                case directions::bottom_left:
+                    softPwmWrite(this->pins.in1, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in2, this->speed.fullspeed);
                     break;
-                case directions.bottom_right:
-                    softPwmWrite(pins.in1, speed.stop);
-                    softPwmWrite(pins.in2, speed.halfspeed);
+                case directions::bottom_right:
+                    softPwmWrite(this->pins.in1, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in2, this->speed.halfspeed);
                     break;
-                case directions.top_left:
-                    softPwmWrite(pins.in1, speed.fullspeed);
-                    softPwmWrite(pins.in2, speed.stop);
+                case directions::top_left:
+                    softPwmWrite(this->pins.in1, this->speed.fullspeed);
+                    softPwmWrite(this->pins.in2, this->speed.stopspeed);
                     break;
-                case directions.top_right:
-                    softPwmWrite(pins.in1, speed.halfspeed);
-                    softPwmWrite(pins.in2, speed.stop);
+                case directions::top_right:
+                    softPwmWrite(this->pins.in1, this->speed.halfspeed);
+                    softPwmWrite(this->pins.in2, this->speed.stopspeed);
                     break;
                 default:
                     stop();
                     break;
             }
-        case motors.right:
+        case motors::right_motor:
             switch (direction) {
-                case directions.forward:
-                    softPwmWrite(pins.in3, speed.overdrive);
-                    softPwmWrite(pins.in4, speed.stop);
+                case directions::forward:
+                    softPwmWrite(this->pins.in3, this->speed.overdrive);
+                    softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
-                case directions.backward:
-                    softPwmWrite(pins.in3, speed.stop);
-                    softPwmWrite(pins.in4, speed.fullspeed);
+                case directions::backward:
+                    softPwmWrite(this->pins.in3, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in4, this->speed.fullspeed);
                     break;
-                case directions.stop:
-                    softPwmWrite(pins.in3, speed.overdrive);
-                    softPwmWrite(pins.in4, speed.overdrive);
+                case directions::brake:
+                    softPwmWrite(this->pins.in3, this->speed.overdrive);
+                    softPwmWrite(this->pins.in4, this->speed.overdrive);
                     break;
-                case directions.left:
-                    softPwmWrite(pins.in3, speed.stop);
-                    softPwmWrite(pins.in4, speed.fullspeed);
+                case directions::left:
+                    softPwmWrite(this->pins.in3, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in4, this->speed.fullspeed);
                     break;
-                case directions.right:
-                    softPwmWrite(pins.in3, speed.fullspeed);
-                    softPwmWrite(pins.in4, speed.stop);
+                case directions::right:
+                    softPwmWrite(this->pins.in3, this->speed.fullspeed);
+                    softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
-                case directions.bottom_left:
-                    softPwmWrite(pins.in3, speed.stop);
-                    softPwmWrite(pins.in4, speed.halfspeed);
+                case directions::bottom_left:
+                    softPwmWrite(this->pins.in3, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in4, this->speed.halfspeed);
                     break;
-                case directions.bottom_right:
-                    softPwmWrite(pins.in3, speed.stop);
-                    softPwmWrite(pins.in4, speed.fullspeed);
+                case directions::bottom_right:
+                    softPwmWrite(this->pins.in3, this->speed.stopspeed);
+                    softPwmWrite(this->pins.in4, this->speed.fullspeed);
                     break;
-                case directions.top_left:
-                    softPwmWrite(pins.in3, speed.halfspeed);
-                    softPwmWrite(pins.in4, speed.stop);
+                case directions::top_left:
+                    softPwmWrite(this->pins.in3, this->speed.halfspeed);
+                    softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
-                case directions.top_right:
-                    softPwmWrite(pins.in3, speed.fullspeed);
-                    softPwmWrite(pins.in4, speed.stop);
+                case directions::top_right:
+                    softPwmWrite(this->pins.in3, this->speed.fullspeed);
+                    softPwmWrite(this->pins.in4, this->speed.stopspeed);
                     break;
                 default:
                     stop();
@@ -122,42 +122,42 @@ void CARRINHO::setMotor(s_motors& motor, s_directions& direction) {
     }
 }
 
-void forward() {
-    setMotor(motors.left, directions.forward);
-    setMotor(motors.right, directions.forward);
+void CARRINHO::move_forward() {
+    setMotor(motors::left_motor, directions::forward);
+    setMotor(motors::right_motor, directions::forward);
 }
 
-void backward() {
-    setMotor(motors.left, directions.backward);
-    setMotor(motors.right, directions.backward);
+void CARRINHO::move_backward() {
+    setMotor(motors::left_motor, directions::backward);
+    setMotor(motors::right_motor, directions::backward);
 }
 
-void left() {
-    setMotor(motors.left, directions.left);
-    setMotor(motors.right, directions.left);
+void CARRINHO::move_left() {
+    setMotor(motors::left_motor, directions::left);
+    setMotor(motors::right_motor, directions::left);
 }
 
-void right() {
-    setMotor(motors.left, directions.right);
-    setMotor(motors.right, directions.right);
+void CARRINHO::move_right() {
+    setMotor(motors::left_motor, directions::right);
+    setMotor(motors::right_motor, directions::right);
 }
 
-void bottom_left() {
-    setMotor(motors.left, directions.bottom_left);
-    setMotor(motors.right, directions.bottom_left);
+void CARRINHO::move_bottom_left() {
+    setMotor(motors::left_motor, directions::bottom_left);
+    setMotor(motors::right_motor, directions::bottom_left);
 }
 
-void bottom_right() {
-    setMotor(motors.left, directions.bottom_right);
-    setMotor(motors.right, directions.bottom_right);
+void CARRINHO::move_bottom_right() {
+    setMotor(motors::left_motor, directions::bottom_right);
+    setMotor(motors::right_motor, directions::bottom_right);
 }
 
-void top_left() {
-    setMotor(motors.left, directions.top_left);
-    setMotor(motors.right, directions.top_left);
+void CARRINHO::move_top_left() {
+    setMotor(motors::left_motor, directions::top_left);
+    setMotor(motors::right_motor, directions::top_left);
 }
 
-void top_right() {
-    setMotor(motors.left, directions.top_right);
-    setMotor(motors.right, directions.top_right);
+void CARRINHO::move_top_right() {
+    setMotor(motors::left_motor, directions::top_right);
+    setMotor(motors::right_motor, directions::top_right);
 }

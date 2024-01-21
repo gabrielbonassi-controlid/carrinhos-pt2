@@ -5,7 +5,7 @@ OBJS_PATH = $(CURR_DIR)/src/objs/
 USER_NAME = $(shell whoami)
 
 CXX = g++ -std=gnu++14
-CXXFLAGS = -fmax-errors=2 `pkg-config opencv --libs --cflags` -lcekeikon -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -O3 -s
+CXXFLAGS = -fmax-errors=2 `pkg-config opencv --libs --cflags` -lcekeikon -lwiringPi -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -O3 -s
 CXXFLAGS_X86_64 = -fmax-errors=2 -L/home/$(USER_NAME)/cekeikon5/opencv2cpu/lib -I/home/$(USER_NAME)/cekeikon5/opencv2cpu/include `pkg-config /home/$(USER_NAME)/cekeikon5/opencv2cpu/lib/pkgconfig/opencv.pc --libs --cflags` -lcekeikon2 -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -O3 -s
 # Get the system architecture
 ARCH := $(shell uname -m)
@@ -19,7 +19,7 @@ OBJS_CAMCLIENT1 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)camclien
 OBJS_CAMSERVER1 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)camserver1.o
 OBJS_CAMCLIENT2 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)camclient2.o
 OBJS_CAMSERVER2 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)camserver2.o
-OBJS_SERVER1 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)carrinho.o $(OBJS_PATH)server1.o
+OBJS_SERVER1 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)server1.o
 OBJS_CLIENT1 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)client1.o
 OBJS_SERVER2 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)carrinho.o $(OBJS_PATH)server2.o
 OBJS_CLIENT2 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)client2.o

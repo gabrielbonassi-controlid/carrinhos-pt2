@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/camclient1.dir/src/source/device.cpp.o CMakeFiles/camclient1.dir/src/source/client.cpp.o CMakeFiles/camclient1.dir/src/source/camclient1.cpp.o  -o camclient1 -lcekeikon -fmax-errors=2 `pkg-config opencv --libs --cflags` -lcekeikon -L/home//cekeikon5/cekeikon/bin -I/home//cekeikon5/cekeikon/src -I -O3 -s 

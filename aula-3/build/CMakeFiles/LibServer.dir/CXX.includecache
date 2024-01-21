@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/orangepi/carrinhos-pt2/aula-3/src/source/server.cpp
+server.hpp
+/home/orangepi/carrinhos-pt2/aula-3/src/source/server.hpp
+

@@ -1,0 +1,13 @@
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/edit_cache.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/make_clean.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/make_all.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/server.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/LibDevice.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/camserver1.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/LibClient.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/LibServer.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/rebuild_cache.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/camserver2.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/camclient2.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/client.dir
+/home/orangepi/carrinhos-pt2/aula-3/build/CMakeFiles/camclient1.dir

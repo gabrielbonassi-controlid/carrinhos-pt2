@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
                 if (argv[3][0] == 't')
                     vo << screen;
                 else if (argv[3][0] == 'c')
-                    vo << frame;
+                    vo << image;
             }
         }
     }

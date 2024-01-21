@@ -147,7 +147,7 @@ void CARRINHO::move_backward() {
     softPwmWrite(motor::dir_tras, speed::fullspeed);
 }
 
-void CARRINHO::move_left() {
+void CARRINHO::move_right() {
     // setMotor(motors::left_motor, directions::left);
     // setMotor(motors::right_motor, directions::left);
     softPwmWrite(motor::esq_frente, speed::fullspeed);
@@ -156,7 +156,7 @@ void CARRINHO::move_left() {
     softPwmWrite(motor::dir_tras, speed::fullspeed);
 }
 
-void CARRINHO::move_right() {
+void CARRINHO::move_left() {
     // setMotor(motors::left_motor, directions::right);
     // setMotor(motors::right_motor, directions::right);
     softPwmWrite(motor::esq_frente, speed::stopspeed);
@@ -165,14 +165,14 @@ void CARRINHO::move_right() {
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
-void CARRINHO::move_bottom_left() {
+void CARRINHO::move_bottom_right() {
     softPwmWrite(motor::esq_frente, speed::stopspeed);
     softPwmWrite(motor::esq_tras, speed::fullspeed);
     softPwmWrite(motor::dir_frente, speed::stopspeed);
     softPwmWrite(motor::dir_tras, speed::halfspeed);
 }
 
-void CARRINHO::move_bottom_right() {
+void CARRINHO::move_bottom_left() {
     // setMotor(motors::left_motor, directions::bottom_right);
     // setMotor(motors::right_motor, directions::bottom_right);
     softPwmWrite(motor::esq_frente, speed::stopspeed);
@@ -181,7 +181,7 @@ void CARRINHO::move_bottom_right() {
     softPwmWrite(motor::dir_tras, speed::fullspeed);
 }
 
-void CARRINHO::move_top_left() {
+void CARRINHO::move_top_right() {
     // setMotor(motors::left_motor, directions::top_left);
     // setMotor(motors::right_motor, directions::top_left);
     softPwmWrite(motor::esq_frente, speed::fullspeed);
@@ -190,7 +190,7 @@ void CARRINHO::move_top_left() {
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
-void CARRINHO::move_top_right() {
+void CARRINHO::move_top_left() {
     // setMotor(motors::left_motor, directions::top_right);
     // setMotor(motors::right_motor, directions::top_right);
     softPwmWrite(motor::esq_frente, speed::halfspeed);

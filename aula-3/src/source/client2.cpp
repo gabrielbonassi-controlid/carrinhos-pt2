@@ -26,13 +26,13 @@ void resetJanela(Mat_<COR> janela) {
     reta(janela, 0, 80, 240, 80, COR(0, 0, 0), 2);
     reta(janela, 0, 160, 240, 160, COR(0, 0, 0), 2);
 
-    reta(janela, 160, 110, 160, 130, vermelho, 2);
-    reta(janela, 110, 160, 130, 160, vermelho, 2);
+    reta(janela, 120, 110, 120, 130, vermelho, 2);
+    reta(janela, 110, 120, 130, 120, vermelho, 2);
 
-    flecha(janela, 60, 160, 20, 160, vermelho, 2);   // CIMA
-    flecha(janela, 180, 160, 220, 160, vermelho, 2); // BAIXO
-    flecha(janela, 160, 60, 160, 20, vermelho, 2);   // ESQUERDA
-    flecha(janela, 160, 180, 160, 220, vermelho, 2); // DIREITA
+    flecha(janela, 60, 120, 20, 120, vermelho, 2);   // CIMA
+    flecha(janela, 180, 120, 220, 120, vermelho, 2); // BAIXO
+    flecha(janela, 120, 60, 120, 20, vermelho, 2);   // ESQUERDA
+    flecha(janela, 120, 180, 120, 220, vermelho, 2); // DIREITA
 
     flecha(janela, 60, 60, 20, 20, vermelho, 2);     // Diagonal CIMA/ESQUERDA
     flecha(janela, 60, 180, 20, 220, vermelho, 2);   // diagonal CIMA/DIREITA
@@ -47,19 +47,19 @@ void on_mouse(int event, int c, int l, int flags, void* userdata) { //Funcao cal
         estado = DIAG_SUP_LEFT;
     else if (80 <= l && l < 160 && 0 <= c && c < 80)
         estado = UP;
-    else if (160 <= l && l < 240 && 0 <= c && c < 80)
+    else if (120 <= l && l < 240 && 0 <= c && c < 80)
         estado = DIAG_SUP_RIGHT;
     else if (0 <= l && l < 80 && 80 <= c && c < 160)
         estado = LEFT_180;
     else if (80 <= l && l < 160 && 80 <= c && c < 160)
         estado = STOP;
-    else if (160 <= l && l < 240 && 80 <= c && c < 160)
+    else if (120 <= l && l < 240 && 80 <= c && c < 160)
         estado = RIGHT_180;
     else if (0 <= l && l < 80 && 160 <= c && c < 240)
         estado = DIAG_INF_LEFT;
     else if (80 <= l && l < 160 && 160 <= c && c < 240)
         estado = DOWN;
-    else if (160 <= l && l < 240 && 160 <= c && c < 240)
+    else if (120 <= l && l < 240 && 160 <= c && c < 240)
         estado = DIAG_INF_RIGHT;
     else
         estado = DEFAULT;

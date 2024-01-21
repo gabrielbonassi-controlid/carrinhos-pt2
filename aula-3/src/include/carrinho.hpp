@@ -39,8 +39,8 @@ class CARRINHO
     };
 
     enum motors {
-        left_motor = 1,
-        right_motor = 2
+        left_motor = 2,
+        right_motor = 1
     };
 public:
     s_pins pins;

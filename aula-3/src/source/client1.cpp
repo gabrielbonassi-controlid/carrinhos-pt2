@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     // ### SETUP DA JANELA ###
     COR cinza(128, 128, 128);
     COR vermelho(0, 0, 255);
-    Mat_<COR> janela(240, 560, cinza);
+    Mat_<COR> janela(240, 240, cinza);
     namedWindow("janela");
     setMouseCallback("janela", on_mouse);
 
@@ -68,23 +68,23 @@ int main(int argc, char *argv[]) {
     }
     VideoWriter vo(name, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
     int ch;
-    reta(ui, 80, 0, 80, 240, COR(0, 0, 0));
-    reta(ui, 160, 0, 160, 240, COR(0, 0, 0));
-    reta(ui, 0, 80, 240, 80, COR(0, 0, 0));
-    reta(ui, 0, 160, 240, 160, COR(0, 0, 0));
+    reta(janela, 80, 0, 80, 240, COR(0, 0, 0));
+    reta(janela, 160, 0, 160, 240, COR(0, 0, 0));
+    reta(janela, 0, 80, 240, 80, COR(0, 0, 0));
+    reta(janela, 0, 160, 240, 160, COR(0, 0, 0));
 
-    reta(ui, 120, 110, 120, 130, red);
-    reta(ui, 110, 120, 130, 120, red);
+    reta(janela, 120, 110, 120, 130, vermelho);
+    reta(janela, 110, 120, 130, 120, vermelho);
 
-    flecha(ui, 60, 120, 20, 120, red);   // CIMA
-    flecha(ui, 180, 120, 220, 120, red); // BAIXO
-    flecha(ui, 120, 60, 120, 20, red);   // ESQUERDA
-    flecha(ui, 120, 180, 120, 220, red); // DIREITA
+    flecha(janela, 60, 120, 20, 120, vermelho);   // CIMA
+    flecha(janela, 180, 120, 220, 120, vermelho); // BAIXO
+    flecha(janela, 120, 60, 120, 20, vermelho);   // ESQUERDA
+    flecha(janela, 120, 180, 120, 220, vermelho); // DIREITA
 
-    flecha(ui, 60, 60, 20, 20, red);     // Diagonal CIMA/ESQUERDA
-    flecha(ui, 60, 180, 20, 220, red);   // diagonal CIMA/DIREITA
-    flecha(ui, 180, 60, 220, 20, red);   // Diagonal BAIXO/ESQUERDA
-    flecha(ui, 180, 180, 220, 220, red); // Diagonal BAIXO/DIREITA
+    flecha(janela, 60, 60, 20, 20, vermelho);     // Diagonal CIMA/ESQUERDA
+    flecha(janela, 60, 180, 20, 220, vermelho);   // diagonal CIMA/DIREITA
+    flecha(janela, 180, 60, 220, 20, vermelho);   // Diagonal BAIXO/ESQUERDA
+    flecha(janela, 180, 180, 220, 220, vermelho); // Diagonal BAIXO/DIREITA
 
     uint32_t key;
     while (true) {

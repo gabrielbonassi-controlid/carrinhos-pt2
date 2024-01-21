@@ -47,19 +47,19 @@ void on_mouse(int event, int c, int l, int flags, void* userdata) { //Funcao cal
         estado = DIAG_SUP_LEFT;
     else if (80 <= l && l < 160 && 0 <= c && c < 80)
         estado = LEFT_180;
-    else if (120 <= l && l < 240 && 0 <= c && c < 80)
+    else if (160 <= l && l < 240 && 0 <= c && c < 80)
         estado = DIAG_INF_LEFT;
     else if (0 <= l && l < 80 && 80 <= c && c < 160)
         estado = UP;
     else if (80 <= l && l < 160 && 80 <= c && c < 160)
         estado = STOP;
-    else if (120 <= l && l < 240 && 80 <= c && c < 160)
+    else if (160 <= l && l < 240 && 80 <= c && c < 160)
         estado = DOWN;
     else if (0 <= l && l < 80 && 160 <= c && c < 240)
         estado = DIAG_SUP_RIGHT;
     else if (80 <= l && l < 160 && 160 <= c && c < 240)
         estado = DOWN;
-    else if (120 <= l && l < 240 && 160 <= c && c < 240)
+    else if (160 <= l && l < 240 && 160 <= c && c < 240)
         estado = DIAG_INF_RIGHT;
     else
         estado = DEFAULT;
@@ -111,17 +111,17 @@ int main(int argc, char *argv[]) {
                     for (int c = 0; c < 80; c++)
                         janela(l, c) = vermelho;
                 break;
-            case UP:
+            case LEFT_180:
                 for (int l = 80; l < 160; l++)
                     for (int c = 0; c < 80; c++)
                         janela(l, c) = vermelho;
                 break;
-            case DIAG_SUP_RIGHT:
+            case DIAG_INF_LEFT:
                 for (int l = 160; l < 240; l++)
                     for (int c = 0; c < 80; c++)
                         janela(l, c) = vermelho;
                 break;
-            case LEFT_180:
+            case UP:
                 for (int l = 0; l < 80; l++)
                     for (int c = 80; c < 160; c++)
                         janela(l, c) = vermelho;
@@ -131,17 +131,17 @@ int main(int argc, char *argv[]) {
                     for (int c = 80; c < 160; c++)
                         janela(l, c) = vermelho;
                 break;
-            case RIGHT_180:
+            case DOWN:
                 for (int l = 160; l < 240; l++)
                     for (int c = 80; c < 160; c++)
                         janela(l, c) = vermelho;
                 break;
-            case DIAG_INF_LEFT:
+            case DIAG_SUP_RIGHT:
                 for (int l = 0; l < 80; l++)
                     for (int c = 160; c < 240; c++)
                         janela(l, c) = vermelho;
                 break;
-            case DOWN:
+            case RIGHT_180:
                 for (int l = 80; l < 160; l++)
                     for (int c = 160; c < 240; c++)
                         janela(l, c) = vermelho;

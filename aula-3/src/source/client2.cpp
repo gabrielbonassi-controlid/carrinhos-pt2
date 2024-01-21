@@ -54,11 +54,11 @@ void on_mouse(int event, int c, int l, int flags, void* userdata) { //Funcao cal
     else if (80 <= l && l < 160 && 80 <= c && c < 160)
         estado = STOP;
     else if (160 <= l && l < 240 && 80 <= c && c < 160)
-        estado = RIGHT;
+        estado = DOWN;
     else if (0 <= l && l < 80 && 160 <= c && c < 240)
         estado = DIAG_SUP_RIGHT;
     else if (80 <= l && l < 160 && 160 <= c && c < 240)
-        estado = DOWN;
+        estado = RIGHT_180;
     else if (160 <= l && l < 240 && 160 <= c && c < 240)
         estado = DIAG_INF_RIGHT;
     else

@@ -11,37 +11,101 @@
 
 using namespace std;
 
+
 void erro() {
     std::cout << ("erro");
+
     exit(0);
+
 }
 
 int main() {
     // definicoes dos pins
-    const int in1 = 3;
-    const int in2 = 4;
-    const int in3 = 9;
-    const int in4 = 10;
+    const int in1 = 3; //esquerda frente
+
+    const int in2 = 4; //esquerda trás
+
+    const int in3 = 9; //direita trás
+
+    const int in4 = 10; //direita frente
+
     wiringPiSetup();
+
     
     if (softPwmCreate(in1, 0, 100)) erro();
+
     if (softPwmCreate(in2, 0, 100)) erro();
+
     if (softPwmCreate(in3, 0, 100)) erro();
+
     if (softPwmCreate(in4, 0, 100)) erro();
+
     
-    for (int i=0; i<2; i++) {
-        // gira para a direita
-        softPwmWrite(in1, 100); softPwmWrite(in2, 0); delay(2000);
-        softPwmWrite(in1, 0); softPwmWrite(in2, 100); delay(2000);
-        softPwmWrite(in1, 60); softPwmWrite(in2, 0); delay(2000);
-        softPwmWrite(in1, 0); softPwmWrite(in2, 60); delay(2000);
-        softPwmWrite(in1, 0); softPwmWrite(in2, 0); delay(2000);
+    for (int i=0;
+     i<2;
+     i++) {
+        //
+        softPwmWrite(in1, 100);
+        std::cout << "in1: 100" << std::endl;
+        softPwmWrite(in2, 0);
+        std::cout << "in2: 0" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in1, 0);
+        std::cout << "in1: 0" << std::endl;
+        softPwmWrite(in2, 100);
+        std::cout << "in2: 100" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in1, 60);
+        std::cout << "in1: 60" << std::endl;
+        softPwmWrite(in2, 0);
+        std::cout << "in2: 0" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in1, 0);
+        std::cout << "in1: 0" << std::endl;
+        softPwmWrite(in2, 60);
+        std::cout << "in2: 60" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in1, 0);
+        std::cout << "in1: 0" << std::endl;
+        softPwmWrite(in2, 0);
+        std::cout << "in2: 0" << std::endl;
+        delay(2000);
+
         
         // gira para a esquerda
-        softPwmWrite(in3, 100); softPwmWrite(in4, 0); delay(2000);
-        softPwmWrite(in3, 0); softPwmWrite(in4, 100); delay(2000);
-        softPwmWrite(in3, 60); softPwmWrite(in4, 0); delay(2000);
-        softPwmWrite(in3, 0); softPwmWrite(in4, 60); delay(2000);
-        softPwmWrite(in3, 0); softPwmWrite(in4, 0); delay(2000);
+        softPwmWrite(in3, 100);
+        std::cout << "in3: 100" << std::endl;
+        softPwmWrite(in4, 0);
+        std::cout << "in4: 0" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in3, 0);
+        std::cout << "in3: 0" << std::endl;
+        softPwmWrite(in4, 100);
+        std::cout << "in4: 100" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in3, 60);
+        std::cout << "in3: 60" << std::endl;
+        softPwmWrite(in4, 0);
+        std::cout << "in4: 0" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in3, 0);
+        std::cout << "in3: 0" << std::endl;
+        softPwmWrite(in4, 60);
+        std::cout << "in4: 60" << std::endl;
+        delay(2000);
+
+        softPwmWrite(in3, 0);
+        std::cout << "in3: 0" << std::endl;
+        softPwmWrite(in4, 0);
+        std::cout << "in4: 0" << std::endl;
+        delay(2000);
+
     }
 }

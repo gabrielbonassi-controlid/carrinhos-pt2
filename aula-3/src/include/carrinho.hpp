@@ -8,43 +8,25 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include <cekeikon.h>
+#include <stdio.h>
 
 class CARRINHO
 {
-    struct s_pins {
-        const int in1 = 3;
-        const int in2 = 4;
-        const int in3 = 9;
-        const int in4 = 10;
+
+    enum motor {
+        esq_frente = 3,
+        esq_tras = 4,
+        dir_frente = 10,
+        dir_tras = 9
     };
 
-    struct s_speed {
-        const int fullspeed = 40;
-        const int overdrive = 100;
-        const int halfspeed = 20;
-        const int stopspeed = 0;
-    };
-
-    enum directions {
-        forward = 8,
-        backward = 2,
-        brake = 5,
-        left = 4,
-        right = 6,
-        bottom_left = 1,
-        bottom_right = 3,
-        top_left = 7,
-        top_right = 9,
-
-    };
-
-    enum motors {
-        left_motor = 2,
-        right_motor = 1
+    enum speed {
+        fullspeed = 100,
+        overdrive = 100,
+        halfspeed = 60,
+        stopspeed = 0
     };
 public:
-    s_pins pins;
-    s_speed speed;
     /*
      * Constructor
      */
@@ -57,7 +39,6 @@ public:
     ~CARRINHO();
 
     void stop();
-    void setMotor(int motor, int direction);
     void move_forward();
     void move_backward();
     void move_left();

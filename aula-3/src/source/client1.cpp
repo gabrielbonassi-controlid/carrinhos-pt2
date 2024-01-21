@@ -15,7 +15,7 @@ enum State {
     DIAG_INF_LEFT,
     DOWN,
     DIAG_INF_RIGHT
-}
+};
 
 State estado = DEFAULT;
 void on_mouse(int event, int c, int l, int flags, void* userdata) { //Funcao callback

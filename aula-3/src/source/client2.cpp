@@ -149,13 +149,6 @@ int main(int argc, char *argv[]) {
                 break;
         }
 
-        for(int l = 0; l < janela.rows; l++){
-		    for(int c = 0; c < janela.cols; c++){
-		    	if(c > 240)
-		    		janela(l,c) = a(l,c-240);
-		    }
-        }
-
         screen = grudaH(janela, image)
         imshow("janela", screen);
         //client.sendUint(1) // confirma recebimento da imagem

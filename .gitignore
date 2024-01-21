@@ -1,0 +1,15 @@
+.vscode/*
+.vscode
+
+### Below combination will ignore all files without extension ###
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all dirs
+!*/
+### Above combination will ignore all files without extension ###
+*.avi
+
+# Unignore all makefiles
+!Makefile

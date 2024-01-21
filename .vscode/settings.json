@@ -1,0 +1,12 @@
+{
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "files.associations": {
+        "*.ipp": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "array": "cpp",
+        "vector": "cpp",
+        "random": "cpp"
+    }
+}

@@ -50,7 +50,7 @@ int best_template_size(int last_size, Mat_<FLT> img_ref, Mat_<FLT> next_frame_fl
     return size;
 }
 
-void draw_box(int size, Mat_<FLT> quadrado, Mat_<FLT> next_frame_flt) {
+void draw_box(int size, Mat_<FLT> quadrado, Mat_<COR> next_frame_flt) {
     Mat_<FLT> templ = quadrado;
     resize(templ, templ, Size(size, size), 0, 0, INTER_AREA);
     line(next_frame_flt, Point(min_max.match_loc.x + templ.cols / 2, min_max.match_loc.y + templ.rows / 2 + 0.02 * templ.rows), Point(min_max.match_loc.x + templ.cols / 2, min_max.match_loc.y + templ.rows / 2 - 0.02 * templ.rows), Scalar(0, 255, 255), 1, 8);

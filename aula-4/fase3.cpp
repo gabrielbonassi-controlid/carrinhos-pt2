@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
     std::string output_file = argv[3];
 
     // leitura do quadrado
-    Mat<FLT> quadrado;
+    Mat_<FLT> quadrado;
     le(quadrado, quadrado_file);
     
     // leitura do video

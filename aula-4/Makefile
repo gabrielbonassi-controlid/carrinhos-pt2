@@ -5,8 +5,8 @@ OBJS_PATH = $(CURR_DIR)/src/objs/
 USER_NAME = $(shell whoami)
 
 CXX = g++ -std=gnu++14
-CXXFLAGS = -fmax-errors=2 `pkg-config opencv --libs --cflags` -lcekeikon -lwiringPi -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -O3 -s
-CXXFLAGS_X86_64 = -fmax-errors=2 -L/home/$(USER_NAME)/cekeikon5/opencv2cpu/lib -I/home/$(USER_NAME)/cekeikon5/opencv2cpu/include `pkg-config /home/$(USER_NAME)/cekeikon5/opencv2cpu/lib/pkgconfig/opencv.pc --libs --cflags` -lcekeikon2 -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -O3 -s
+CXXFLAGS = -fmax-errors=2 `pkg-config opencv --libs --cflags` -lcekeikon -lwiringPi -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -fopenmp -pthread -O3 -s
+CXXFLAGS_X86_64 = -fmax-errors=2 -L/home/$(USER_NAME)/cekeikon5/opencv2cpu/lib -I/home/$(USER_NAME)/cekeikon5/opencv2cpu/include `pkg-config /home/$(USER_NAME)/cekeikon5/opencv2cpu/lib/pkgconfig/opencv.pc --libs --cflags` -lcekeikon2 -L/home/$(USER_NAME)/cekeikon5/cekeikon/bin -I/home/$(USER_NAME)/cekeikon5/cekeikon/src -I$(INCLUDE_PATH) -pthread -fopenmp -O3 -s
 # Get the system architecture
 ARCH := $(shell uname -m)
 

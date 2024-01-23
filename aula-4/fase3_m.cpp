@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <omp.h>
 
 using namespace std;
 
@@ -35,7 +36,7 @@ int best_template_size(int last_size, Mat_<FLT> img_ref, Mat_<FLT> next_frame_fl
         min = last_size - 10;
         max = last_size + 10;
     }
-
+#pragma omp parallel for
     for (int i = min; i < max; i = i + 5) { // pula de 5 em 5 pxl pq ngm merece
         resize(img_ref, img_ref_temp, Size(i, i), 0, 0, INTER_AREA);
         img_ref_temp = somaAbsDois(dcReject(img_ref_temp, 1.0));
@@ -59,6 +60,7 @@ void draw_box(int size, Mat_<FLT> quadrado, Mat_<COR> next_frame_flt) {
 }
 
 int main(int argc, char* argv[]) {
+    omp_set_num_threads(4);
     if (argc != 4) {
         std::cout << "Utilização do programa:" << "\n";
         std::cout << "fase3 video_capturado.avi quadrado.png video_localizando.avi" << "\n";

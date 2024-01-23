@@ -72,7 +72,6 @@ int main(int argc, char* argv[]) {
     std::string quadrado_file = argv[2];
     std::string output_file = argv[3];
 
-    namedWindow("Janela");
 
     // leitura do quadrado
     Mat_<FLT> quadrado;
@@ -174,7 +173,6 @@ int main(int argc, char* argv[]) {
                 is_last_frame = false;
             }
         }
-        imshow("Janela", next_frame_loop);
         vo << next_frame_loop;
     }
     TimePoint t2 = timePoint();

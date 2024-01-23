@@ -36,15 +36,42 @@ int best_template_size(int last_size, Mat_<FLT> img_ref, Mat_<FLT> next_frame_fl
         min = last_size - 10;
         max = last_size + 10;
     }
+// #pragma omp parallel for
+//     for (int i = min; i < max; i = i + 5) { // pula de 5 em 5 pxl pq ngm merece
+//         Mat_<FLT> img_ref_temp_par, result_par;
+//         resize(img_ref, img_ref_temp, Size(i, i), 0, 0, INTER_AREA);
+//         img_ref_temp = somaAbsDois(dcReject(img_ref_temp, 1.0));
+//         matchTemplate(next_frame_flt, img_ref_temp, result, CV_TM_CCOEFF_NORMED);
+//         minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
+//         if (min_max.max_val > max_value_aux) {
+//             max_value_aux = min_max.max_val;
+//             size = i;
+//         }
+//     }
 #pragma omp parallel for
-    for (int i = min; i < max; i = i + 5) { // pula de 5 em 5 pxl pq ngm merece
+    for (int i = min; i < max; i = i + 5) {
+        cv::Mat img_ref_temp, result;
+        double max_value_aux_par = -1;
+        int size_aux = -1;
+
         resize(img_ref, img_ref_temp, Size(i, i), 0, 0, INTER_AREA);
         img_ref_temp = somaAbsDois(dcReject(img_ref_temp, 1.0));
         matchTemplate(next_frame_flt, img_ref_temp, result, CV_TM_CCOEFF_NORMED);
+
+        MIN_MAX_MATCH min_max;
         minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
-        if (min_max.max_val > max_value_aux) {
-            max_value_aux = min_max.max_val;
-            size = i;
+
+        if (min_max.max_val > max_value_aux_par) {
+            max_value_aux_par = min_max.max_val;
+            size_aux = i;
+        }
+
+        #pragma omp critical
+        {
+            if (max_value_aux_par > max_value_aux) {
+                max_value_aux = max_value_aux_par;
+                size = size_aux;
+            }
         }
     }    
     
@@ -60,7 +87,6 @@ void draw_box(int size, Mat_<FLT> quadrado, Mat_<COR> next_frame_flt) {
 }
 
 int main(int argc, char* argv[]) {
-    omp_set_num_threads(4);
     if (argc != 4) {
         std::cout << "Utilização do programa:" << "\n";
         std::cout << "fase3 video_capturado.avi quadrado.png video_localizando.avi" << "\n";

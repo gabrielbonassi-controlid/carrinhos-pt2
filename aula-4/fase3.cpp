@@ -1,4 +1,4 @@
-#include <cekeikon>
+#include <cekeikon.h>
 
 #include <iostream>
 #include <vector>
@@ -40,9 +40,9 @@ int best_template_size(int last_size, Mat_<FLT> img_ref, Mat_<FLT> next_frame_fl
         resize(img_ref, img_ref_temp, Size(i, i), 0, 0, INTER_AREA);
         img_ref_temp = somaAbsDois(dcReject(img_ref_temp, 1.0));
         matchTemplate(next_frame_flt, img_ref_temp, result, CV_TM_CCOEFF_NORMED);
-        minMaxLoc(result, &min_max->min_val, &min_max->max_val, &min_max->min_loc, &min_max->max_loc);
-        if (min_max->max_val > max_value_aux) {
-            max_value_aux = min_max->max_val;
+        minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
+        if (min_max.max_val > max_value_aux) {
+            max_value_aux = min_max.max_val;
             size = i;
         }
     }    
@@ -53,9 +53,9 @@ int best_template_size(int last_size, Mat_<FLT> img_ref, Mat_<FLT> next_frame_fl
 void draw_box(int size, Mat_<FLT>& quadrado, Mat_<FLT>& next_frame_flt) {
     Mat_<FLT> templ = quadrado;
     resize(templ, templ, Size(size, size), 0, 0, INTER_AREA);
-    line(next_frame_flt, Point(min_max->match_loc.x + templ.cols / 2, min_max->match_loc.y + templ.rows / 2 + 0.02 * templ.rows), Point(min_max->match_loc.x + templ.cols / 2, min_max->match_loc.y + templ.rows / 2 - 0.02 * templ.rows), Scalar(0, 255, 255), 1, 8);
-    line(next_frame_flt,Point(min_max->match_loc.x + templ.cols / 2 + 0.02 * templ.rows, min_max->match_loc.y + templ.rows / 2),Point(min_max->match_loc.x + templ.cols / 2 - 0.02 * templ.rows, min_max->match_loc.y + templ.rows / 2),Scalar(0, 255, 255), 1, 8);
-    rectangle(next_frame_flt, min_max->match_loc, Point(min_max->match_loc.x + templ.cols, min_max->match_loc.y + templ.rows), Scalar(0, 255, 255), 1.5, 8);
+    line(next_frame_flt, Point(min_max.match_loc.x + templ.cols / 2, min_max.match_loc.y + templ.rows / 2 + 0.02 * templ.rows), Point(min_max.match_loc.x + templ.cols / 2, min_max.match_loc.y + templ.rows / 2 - 0.02 * templ.rows), Scalar(0, 255, 255), 1, 8);
+    line(next_frame_flt,Point(min_max.match_loc.x + templ.cols / 2 + 0.02 * templ.rows, min_max.match_loc.y + templ.rows / 2),Point(min_max.match_loc.x + templ.cols / 2 - 0.02 * templ.rows, min_max.match_loc.y + templ.rows / 2),Scalar(0, 255, 255), 1, 8);
+    rectangle(next_frame_flt, min_max.match_loc, Point(min_max.match_loc.x + templ.cols, min_max.match_loc.y + templ.rows), Scalar(0, 255, 255), 1.5, 8);
 }
 
 int main(int argc, char* argv[]) {
@@ -126,22 +126,22 @@ int main(int argc, char* argv[]) {
 
         matchTemplate(next_frame_flt, quadrado_temp, result, CV_TM_CCORR);
 
-        minMaxLoc(result, &min_max->min_val, &min_max->max_val, &min_max->min_loc, &min_max->max_loc);
+        minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
         if (is_last_frame == true) {
-            if (pow((min_max->max_loc.x - min_max->last_loc.x), 2) + pow((min_max->max_loc.y - min_max->last_loc.y), 2) < 400 && min_max->max_val > 0.10) {
+            if (pow((min_max.max_loc.x - min_max.last_loc.x), 2) + pow((min_max.max_loc.y - min_max.last_loc.y), 2) < 400 && min_max.max_val > 0.10) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
-                minMaxLoc(result_normed, &min_max_normed->min_val, &min_max_normed->max_val, &min_max_normed->min_loc, &min_max_normed->max_loc);
+                minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
 
-                if ((pow((min_max->max_loc.x - min_max_normed->max_loc.x), 2) + pow((min_max->max_loc.y - min_max_normed->max_loc.y), 2)) < 400 && min_max_normed->max_val > 0.10) {
-                    if (min_max->max_val > min_max_normed->max_val) {
-                        min_max->match_loc = min_max->max_loc;
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.10) {
+                    if (min_max.max_val > min_max_normed.max_val) {
+                        min_max.match_loc = min_max.max_loc;
                     } else {
-                        min_max->match_loc = min_max_normed->max_loc;
+                        min_max.match_loc = min_max_normed.max_loc;
                     }
 
                     is_last_frame = true;
-                    min_max->last_loc = min_max->match_loc;
+                    min_max.last_loc = min_max.match_loc;
                     draw_box(next_size, quadrado, next_frame_flt);
                 } else {
                     is_last_frame = false;
@@ -150,20 +150,20 @@ int main(int argc, char* argv[]) {
                 is_last_frame = false;
             } 
         } else {
-            if (min_max->max_val > 0.18) {
+            if (min_max.max_val > 0.18) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
-                minMaxLoc(result_normed, &min_max_normed->min_val, &min_max_normed->max_val, &min_max_normed->min_loc, &min_max_normed->max_loc);
+                minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
 
-                if ((pow((min_max->max_loc.x - min_max_normed->max_loc.x), 2) + pow((min_max->max_loc.y - min_max_normed->max_loc.y), 2)) < 400 && min_max_normed->max_val > 0.18) {
-                    if (min_max->max_val > min_max_normed->max_val) {
-                        min_max->match_loc = min_max->max_loc;
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.18) {
+                    if (min_max.max_val > min_max_normed.max_val) {
+                        min_max.match_loc = min_max.max_loc;
                     } else {
-                        min_max->match_loc = min_max_normed->max_loc;
+                        min_max.match_loc = min_max_normed.max_loc;
                     }
 
                     is_last_frame = true;
-                    min_max->last_loc = min_max->match_loc;
+                    min_max.last_loc = min_max.match_loc;
                     draw_box(next_size, quadrado, next_frame_flt);
                 } else {
                     is_last_frame = false;

@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     Mat_<COR> frame;
     uint32_t dist, positive, ch;
     uint32_t received = 0;
+    uint32_t command = 0;
     do {
         vi >> frame;
         server.sendImgComp(frame);
@@ -28,9 +29,14 @@ int main(int argc, char *argv[]) {
         }
         server.receiveUint(ch);
         received = 0;
+        server.receiveUint(command);
         server.receiveUint(dist);
         server.receiveUint(positive);
-        carrinho.move_forward(dist, static_cast<bool>(positive));
+        if (command == 1) {
+            carrinho.move_forward(dist, static_cast<bool>(positive));
+        } else if (command == 0) {
+            carrinho.stop();
+        }
 
     } while (ch != 27);
 }

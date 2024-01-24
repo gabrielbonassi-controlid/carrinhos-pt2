@@ -114,11 +114,11 @@ int main(int argc, char* argv[]) {
     cv::Point mid_quadrado;
     uint32_t dist;
     uint32_t positive; // 1 = esquerda, 0 direita
+    uint32_t command; // 0 = para, 1 = anda
 
     // video de saida
     VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
     int next_size = 0; int last_size = 0;
-    bool is_last_frame = false;
     do {
         client.receiveImgComp(received_image);
 
@@ -157,8 +157,6 @@ int main(int argc, char* argv[]) {
                 }
                 drawBox(next_size, quadrado, next_frame);
             }
-        } else {
-            is_last_frame = false;
         }
         vo << next_frame;
         mid_frame = Point(next_frame.cols / 2, next_frame.rows / 2);
@@ -169,6 +167,12 @@ int main(int argc, char* argv[]) {
         } else {
             positive = 1;
         }
+        if ((320 - min_max.match_loc.x) > 40 && (320 - min_max.match_loc.x) < 280) {
+            command = 1;
+        } else if ((320 - min_max.match_loc.x) < 40 && (320 - min_max.match_loc.x) > 280) {
+            command = 0;
+        }
+        client.sendUint(command);
         client.sendUint(dist);
         client.sendUint(positive);
         imshow("janela", next_frame);

@@ -157,7 +157,12 @@ int main(int argc, char* argv[]) {
                     min_max.match_loc = min_max_normed.max_loc;
                 }
                 drawBox(next_size, quadrado, next_frame);
+                if ((320 - min_max.match_loc.x) > 40 && (320 - min_max.match_loc.x) < 280) {
+                    command = 1;
+                }
             }
+        } else {
+            command = 0;
         }
         vo << next_frame;
         mid_frame = Point(next_frame.cols / 2, next_frame.rows / 2);
@@ -167,11 +172,6 @@ int main(int argc, char* argv[]) {
             positive = 0;
         } else {
             positive = 1;
-        }
-        if ((320 - min_max.match_loc.x) > 40 && (320 - min_max.match_loc.x) < 280) {
-            command = 1;
-        } else if ((320 - min_max.match_loc.x) < 40 && (320 - min_max.match_loc.x) > 280) {
-            command = 0;
         }
         client.sendUint(command);
         client.sendUint(dist);

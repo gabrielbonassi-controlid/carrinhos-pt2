@@ -88,3 +88,26 @@ void CLIENT::receiveBytes(int nBytesToReceive, BYTE *buf) {
             buf += rv;
         }
 }
+
+void CLIENT::resetJanela(Mat_<COR> janela) {
+    COR cinza(128, 128, 128);
+    COR vermelho(0, 0, 255);
+    janela.setTo(cinza);
+    reta(janela, 80, 0, 80, 240, COR(0, 0, 0), 2);
+    reta(janela, 160, 0, 160, 240, COR(0, 0, 0), 2);
+    reta(janela, 0, 80, 240, 80, COR(0, 0, 0), 2);
+    reta(janela, 0, 160, 240, 160, COR(0, 0, 0), 2);
+
+    reta(janela, 120, 110, 120, 130, vermelho, 2);
+    reta(janela, 110, 120, 130, 120, vermelho, 2);
+
+    flecha(janela, 60, 120, 20, 120, vermelho, 2);   // CIMA
+    flecha(janela, 180, 120, 220, 120, vermelho, 2); // BAIXO
+    flecha(janela, 120, 60, 120, 20, vermelho, 2);   // ESQUERDA
+    flecha(janela, 120, 180, 120, 220, vermelho, 2); // DIREITA
+
+    flecha(janela, 60, 60, 20, 20, vermelho, 2);     // Diagonal CIMA/ESQUERDA
+    flecha(janela, 60, 180, 20, 220, vermelho, 2);   // diagonal CIMA/DIREITA
+    flecha(janela, 180, 60, 220, 20, vermelho, 2);   // Diagonal BAIXO/ESQUERDA
+    flecha(janela, 180, 180, 220, 220, vermelho, 2); // Diagonal BAIXO/DIREITA
+}

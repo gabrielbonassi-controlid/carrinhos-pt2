@@ -40,6 +40,7 @@ public:
 
     void stop();
     void move_forward();
+    void move_forward(int dist, bool direction); // true = esquerda, false = direita
     void move_backward();
     void move_left();
     void move_right();

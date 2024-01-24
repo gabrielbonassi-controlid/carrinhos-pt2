@@ -26,6 +26,8 @@ public:
 
     void receiveBytes(int nBytesToReceive, BYTE *buf);
 
+    void resetJanela(Mat_<COR> janela);
+
 };
 
 } // namespace connection

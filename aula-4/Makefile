@@ -15,70 +15,28 @@ ifeq ($(ARCH),x86_64)
     CXXFLAGS = $(CXXFLAGS_X86_64)
 endif
 
-OBJS_CAMCLIENT1 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)camclient1.o
-OBJS_CAMSERVER1 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)camserver1.o
-OBJS_CAMCLIENT2 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)camclient2.o
-OBJS_CAMSERVER2 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)camserver2.o
-OBJS_SERVER1 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)server1.o
-OBJS_CLIENT1 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)client1.o
-OBJS_SERVER2 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)carrinho.o $(OBJS_PATH)server2.o
-OBJS_CLIENT2 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)client2.o
+OBJS_SERVER4 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)carrinho.o $(OBJS_PATH)server4.o
+OBJS_CLIENT4 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)client4.o
 
 all: server client
 
-server: camserver1 camserver2 server1 server2
+server: server4
 	@echo "Servidores compilados!"
 
-client: camclient1 camclient2 client1 client2
+client: client4
 	@echo "Clientes compilados!"
 
-camclient1: device.o client.o camclient1.o
-	$(CXX) $(OBJS_CAMCLIENT1) -o $(CURR_DIR)/$@ $(CXXFLAGS)
+server4: device.o server.o carrinho.o server4.o
+	$(CXX) $(OBJS_SERVER4) -o $(CURR_DIR)/$@ $(CXXFLAGS)
 
-camserver1: device.o server.o camserver1.o
-	$(CXX) $(OBJS_CAMSERVER1) -o $(CURR_DIR)/$@ $(CXXFLAGS)
+client4: device.o client.o client4.o
+	$(CXX) $(OBJS_CLIENT4) -o $(CURR_DIR)/$@ $(CXXFLAGS)
 
-camclient2: device.o server.o camclient2.o
-	$(CXX) $(OBJS_CAMCLIENT2) -o $(CURR_DIR)/$@ $(CXXFLAGS)
+server4.o:
+	$(CXX) -c $(SRC_PATH)server4.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
 
-camserver2: device.o server.o camserver2.o
-	$(CXX) $(OBJS_CAMSERVER2) -o $(CURR_DIR)/$@ $(CXXFLAGS)
-
-server1: device.o server.o server1.o
-	$(CXX) $(OBJS_SERVER1) -o $(CURR_DIR)/$@ $(CXXFLAGS)
-
-client1: device.o client.o client1.o
-	$(CXX) $(OBJS_CLIENT1) -o $(CURR_DIR)/$@ $(CXXFLAGS)
-
-server2: device.o server.o carrinho.o server2.o
-	$(CXX) $(OBJS_SERVER2) -o $(CURR_DIR)/$@ $(CXXFLAGS)
-
-client2: device.o client.o client2.o
-	$(CXX) $(OBJS_CLIENT2) -o $(CURR_DIR)/$@ $(CXXFLAGS)
-
-camclient1.o:
-	$(CXX) -c $(SRC_PATH)camclient1.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-camserver1.o:
-	$(CXX) -c $(SRC_PATH)camserver1.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-camclient2.o:
-	$(CXX) -c $(SRC_PATH)camclient2.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-camserver2.o:
-	$(CXX) -c $(SRC_PATH)camserver2.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-server1.o:
-	$(CXX) -c $(SRC_PATH)server1.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-client1.o:
-	$(CXX) -c $(SRC_PATH)client1.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-server2.o:
-	$(CXX) -c $(SRC_PATH)server2.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
-
-client2.o:
-	$(CXX) -c $(SRC_PATH)client2.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
+client4.o:
+	$(CXX) -c $(SRC_PATH)client4.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
 
 device.o: $(INCLUDE_PATH)device.hpp $(SRC_PATH)device.cpp
 	$(CXX) -c $(SRC_PATH)device.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
@@ -94,4 +52,4 @@ carrinho.o: $(INCLUDE_PATH)carrinho.hpp $(SRC_PATH)carrinho.cpp
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS_PATH)*.o camclient1 camclient2 camserver1 camserver2 server1 server2 client1 client2
+	rm -f $(OBJS_PATH)*.o server4 client4

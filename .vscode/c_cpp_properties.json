@@ -5,7 +5,8 @@
             "includePath": [
                 "${default}",
                 "~/cekeikon5/cekeikon/src",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/include/opencv4/**"
             ],
             "defines": [],
             "intelliSenseMode": "linux-gcc-arm64"

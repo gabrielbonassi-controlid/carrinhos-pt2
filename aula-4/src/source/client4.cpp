@@ -164,6 +164,7 @@ int main(int argc, char* argv[]) {
         } else {
             command = 0;
         }
+        flip(next_frame, next_frame, -1);
         vo << next_frame;
         mid_frame = Point(next_frame.cols / 2, next_frame.rows / 2);
         mid_quadrado = Point(min_max.match_loc.x + quadrado.cols / 2, min_max.match_loc.y + quadrado.rows / 2 + 0.02 * quadrado.rows);

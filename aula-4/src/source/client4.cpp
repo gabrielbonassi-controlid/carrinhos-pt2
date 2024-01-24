@@ -114,13 +114,14 @@ int main(int argc, char* argv[]) {
     cv::Point mid_quadrado;
     uint32_t dist;
     uint32_t positive; // 1 = esquerda, 0 direita
-    uint32_t command; // 0 = para, 1 = anda
+    uint32_t command = 0; // 0 = para, 1 = anda
 
     // video de saida
     VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
     int next_size = 0; int last_size = 0;
     do {
         client.receiveImgComp(received_image);
+        client.sendUint(1); // recebido
 
         if (recording) {
             vo << received_image;

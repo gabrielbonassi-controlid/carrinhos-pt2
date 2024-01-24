@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     do {
         vi >> frame;
         server.sendImgComp(frame);
-        while (received != 0) {
+        while (received == 0) {
             server.receiveUint(received);
         }
         server.receiveUint(ch);
@@ -33,8 +33,10 @@ int main(int argc, char *argv[]) {
         server.receiveUint(dist);
         server.receiveUint(positive);
         if (command == 1) {
+            std::cout << "Andando, distância: " << dist << " sentido: " << positive << std::endl;
             carrinho.move_forward(dist, static_cast<bool>(positive));
         } else if (command == 0) {
+            std::cout << "Parando" << std::endl;
             carrinho.stop();
         }
 

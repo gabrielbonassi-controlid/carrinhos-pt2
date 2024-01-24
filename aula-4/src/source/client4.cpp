@@ -169,6 +169,7 @@ int main(int argc, char* argv[]) {
         mid_frame = Point(next_frame.cols / 2, next_frame.rows / 2);
         //mid_quadrado = Point(min_max.match_loc.x + quadrado.cols / 2 + 0.02 * quadrado.rows, min_max.match_loc.y + quadrado.rows / 2);
         mid_quadrado = Point((min_max.match_loc.x + quadrado.cols) / 2, (min_max.match_loc.y + quadrado.rows) / 2);
+        std::cout << "mid_frame: " << mid_frame.x << ", mid_quadrado: " << mid_quadrado.x << "\r" << std::flush;
         if (mid_quadrado.x > mid_frame.x) {
             positive = 0;
         } else {

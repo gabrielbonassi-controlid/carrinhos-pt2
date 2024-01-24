@@ -40,14 +40,14 @@ void CARRINHO::move_forward() {
 
 void CARRINHO::move_forward(int dist, bool direction) {
     if (direction) { //direita tem que ser mais rapida que esquerda
-        softPwmWrite(motor::esq_frente, (speed::fullspeed - dist) );
+        softPwmWrite(motor::esq_frente, (speed::halfspeed - dist) );
         softPwmWrite(motor::esq_tras, speed::stopspeed);
-        softPwmWrite(motor::dir_frente, speed::fullspeed);
+        softPwmWrite(motor::dir_frente, speed::halfspeed);
         softPwmWrite(motor::dir_tras, speed::stopspeed);
     } else {
-        softPwmWrite(motor::esq_frente, speed::fullspeed);
+        softPwmWrite(motor::esq_frente, speed::halfspeed);
         softPwmWrite(motor::esq_tras, speed::stopspeed);
-        softPwmWrite(motor::dir_frente, (speed::fullspeed - dist));
+        softPwmWrite(motor::dir_frente, (speed::halfspeed - dist));
         softPwmWrite(motor::dir_tras, speed::stopspeed);
     }
 }

@@ -31,7 +31,8 @@ int main(int argc, char *argv[]) {
         received = 0;
         server.receiveUint(command);
         server.receiveUint(dist);
-        dist = dist/100;
+        std::cout "Dist antes da divisão: " << dist << std::endl;
+        dist = dist/10;
         server.receiveUint(positive);
         if (command == 1) {
             std::cout << "Andando, distância: " << dist << " sentido: " << positive << std::endl;

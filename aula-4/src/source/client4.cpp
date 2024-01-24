@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
                     min_max.match_loc = min_max_normed.max_loc;
                 }
                 drawBox(next_size, quadrado, next_frame);
-                if ((320 - min_max.match_loc.x) > 40 && (320 - min_max.match_loc.x) < 280) {
+                if ((320 - min_max.match_loc.x) > 10 && (320 - min_max.match_loc.x) < 310) {
                     command = 1;
                 }
             }
@@ -174,9 +174,9 @@ int main(int argc, char* argv[]) {
         mid_quadrado = Point(min_max.match_loc.x, min_max.match_loc.y);
         std::cout << "mid_frame: " << mid_frame.x << ", mid_quadrado: " << mid_quadrado.x << std::endl;//"\r" << std::flush;
         if (mid_quadrado.x > mid_frame.x) {
-            positive = 0;
-        } else {
             positive = 1;
+        } else {
+            positive = 0;
         }
         dist = static_cast<uint32_t>(std::abs(mid_quadrado.x - mid_frame.x));
         client.sendUint(command);

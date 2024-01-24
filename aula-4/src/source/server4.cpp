@@ -31,10 +31,10 @@ int main(int argc, char *argv[]) {
         received = 0;
         server.receiveUint(command);
         server.receiveUint(dist);
-        dist = dist/10;
+        dist = (dist/10)*2;
         server.receiveUint(positive);
         if (command == 1) {
-            std::cout << "Andando, distância: " << dist << " sentido: " << positive << "\r" << std::flush;
+            std::cout << "Andando, distância: " << dist << " sentido: " << positive << std::endl;//<< "\r" << std::flush;
             carrinho.move_forward(dist, static_cast<bool>(positive));
         } else if (command == 0) {
             std::cout << "Parando" << "\r" << std::flush;

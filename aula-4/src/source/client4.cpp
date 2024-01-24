@@ -167,13 +167,14 @@ int main(int argc, char* argv[]) {
         flip(next_frame, next_frame, -1);
         vo << next_frame;
         mid_frame = Point(next_frame.cols / 2, next_frame.rows / 2);
-        mid_quadrado = Point(min_max.match_loc.x + quadrado.cols / 2 + 0.02 * quadrado.rows, min_max.match_loc.y + quadrado.rows / 2);
-        dist = static_cast<uint32_t>(std::abs(mid_quadrado.x - mid_frame.x));
-        if ((mid_quadrado.x - mid_frame.x) > 0) {
+        //mid_quadrado = Point(min_max.match_loc.x + quadrado.cols / 2 + 0.02 * quadrado.rows, min_max.match_loc.y + quadrado.rows / 2);
+        mid_quadrado = Point((min_max.match_loc.x + quadrado.cols) / 2, (min_max.match_loc.y + quadrado.rows) / 2);
+        if (mid_quadrado.x > mid_frame.x) {
             positive = 0;
         } else {
             positive = 1;
         }
+        dist = static_cast<uint32_t>(std::abs(mid_quadrado.x - mid_frame.x));
         client.sendUint(command);
         client.sendUint(dist);
         client.sendUint(positive);

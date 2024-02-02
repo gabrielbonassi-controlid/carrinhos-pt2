@@ -170,11 +170,11 @@ int main(int argc, char* argv[]) {
             quadrado_temp = somaAbsDois(dcReject(quadrado_temp, 1.0));
             matchTemplate(next_frame_flt, quadrado_temp, result, CV_TM_CCORR);
             minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
-            if (min_max.max_val > 0.18) {
+            if (min_max.max_val > 0.15) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
                 minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
-                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.5) {
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.3) {
                     if (min_max.max_val > min_max_normed.max_val) {
                         min_max.match_loc = min_max.max_loc;
                     } else {
@@ -256,45 +256,15 @@ int main(int argc, char* argv[]) {
                         resize(d, number_big, Size(200, 200), 0, 0, INTER_AREA);
                         Mat_<COR> out;
                         Mat_<COR> number_big_color;
-                        if (min_max.max_val > 0.2 && min_max_normed.max_val > 0.5) {
+                        if (min_max.max_val > 0.3 && min_max_normed.max_val > 0.58) {
                             found_number = true;
                             putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
-                            // client.sendUint(1);
                         } else {
                             found_number = false;
-                            // client.sendUint(0);
                         }
                         if (found_number) {
                             client.sendUint(result_recon);
                             std::cout << "Detectou número: " << result_recon << std::endl;
-                            // switch (result_recon) {
-                            //     case 2:
-                            //         wait(2800);
-                            //         break;
-                            //     case 3:
-                            //         wait(2800);
-                            //         break;
-                            //     case 4:
-                            //         wait(2000);
-                            //         break;
-                            //     case 5:
-                            //         wait(2000);
-                            //         break;
-                            //     case 6:
-                            //         wait(1400);
-                            //         break;
-                            //     case 7:
-                            //         wait(1400);
-                            //         break;
-                            //     case 8:
-                            //         wait(1400);
-                            //         break;
-                            //     case 9:
-                            //         wait(1400);
-                            //         break;
-                            //     default:
-                            //         break;
-                            // }
                         } else {
                             client.sendUint(30);
                             std::cout << "Não detectou número" << std::endl;

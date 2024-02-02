@@ -102,6 +102,7 @@ int main(int argc, char *argv[]) {
             server.receiveUint(digit);
             std::cout << "Dígito recebido: " << digit << std::endl;
             if (finished) {
+                finished = false;
                 std::cout << "Começando um comando" << std::endl;
                 digit_copy = digit;
                 t1 = std::chrono::high_resolution_clock::now();

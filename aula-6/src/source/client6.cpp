@@ -170,11 +170,11 @@ int main(int argc, char* argv[]) {
             quadrado_temp = somaAbsDois(dcReject(quadrado_temp, 1.0));
             matchTemplate(next_frame_flt, quadrado_temp, result, CV_TM_CCORR);
             minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
-            if (min_max.max_val > 0.15) {
+            if (min_max.max_val > 0.12) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
                 minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
-                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.3) {
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 100 && min_max_normed.max_val > 0.2) {
                     if (min_max.max_val > min_max_normed.max_val) {
                         min_max.match_loc = min_max.max_loc;
                     } else {

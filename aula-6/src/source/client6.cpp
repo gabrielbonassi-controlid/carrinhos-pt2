@@ -26,21 +26,21 @@ Mat_<FLT> result_normed;
 
 int bestTemplateSize(int last_size, Mat_<FLT> img_ref, Mat_<FLT> next_frame_flt) {
     int size;
-    int min = 50;
-    int max = 100;
+    int min = 5;
+    int max = 110;
     float max_value_aux = 0.0;
     Mat_<FLT> img_ref_temp;
 
     if (last_size < 15) {
-        min = 15;
-        max = 60;
+        min = 5;
+        max = 110;
     } else {
         min = last_size - 10;
         max = last_size + 10;
     }
     
 #pragma omp parallel for
-    for (int i = min; i < max; i = i + 5) {
+    for (int i = min; i < max; i = i + 10) {
         cv::Mat img_ref_temp, result;
         double max_value_aux_par = -1;
         int size_aux = -1;
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
     uint32_t finished = 0;
 
     // le primeiro frame do video
-    VideoCapture vi("/home/gabriel-controlid/poli/carrinhos-pt2/aula-6/capturado.avi");
+    // VideoCapture vi("/home/gabriel-controlid/poli/carrinhos-pt2/aula-6/capturado.avi");
     Mat_<COR> next_frame;
     Mat_<FLT> next_frame_flt;
     cv::Point mid_frame;
@@ -129,10 +129,11 @@ int main(int argc, char* argv[]) {
     VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
     int next_size = 0; int last_size = 0;
     do {
-        vi >> next_frame;
+        // vi >> next_frame;
         client.receiveImgComp(received_image);
         gui.resetWindow();
         gui.paintButton();
+        next_frame = received_image.clone();
         if (!received_image.empty()) {
             client.sendUint(1); // recebido
         } else {
@@ -159,9 +160,7 @@ int main(int argc, char* argv[]) {
 
         if (mode == 1) {
             std::cout << "Modo automático" << std::endl;
-            putText(received_image, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
-            // next_frame = received_image.clone();
-            // flip(next_frame, next_frame, -1);
+            putText(next_frame, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
             next_size = bestTemplateSize(0, quadrado, next_frame_flt);
@@ -170,35 +169,31 @@ int main(int argc, char* argv[]) {
             quadrado_temp = somaAbsDois(dcReject(quadrado_temp, 1.0));
             matchTemplate(next_frame_flt, quadrado_temp, result, CV_TM_CCORR);
             minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
-            if (min_max.max_val > 0.12) {
+            if (min_max.max_val > 0.15) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
                 minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
-                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 100 && min_max_normed.max_val > 0.2) {
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 100 && min_max_normed.max_val > 0.35) {
                     if (min_max.max_val > min_max_normed.max_val) {
                         min_max.match_loc = min_max.max_loc;
                     } else {
                         min_max.match_loc = min_max_normed.max_loc;
                     }
+                    found_box = true;
                     drawBox(next_size, quadrado, next_frame);
                     if ((320 - min_max.match_loc.x) > 10 && (320 - min_max.match_loc.x) < 310) {
-                        found_box = true;
                         int cut = next_size * 0.4;
                         int border = next_size * (1 - 0.4);
                         Mat_<FLT> number(cut, cut);
-                        Mat_<FLT> number_big;
-                        Mat_<COR> number_color;
-                        Mat_<FLT> qx2(1, 14*14);
+                        Mat_<FLT> qx2(1, mnist.nlado*mnist.nlado);
                         Mat_<FLT> number_14;
-                        Mat_<COR> number_14_color;
                         bool found_number = false;
                         for (int l = 0; l < cut; l++) {
                             for (int c = 0; c < cut; c++) {
                                 number(l, c) = next_frame_flt(min_max.match_loc.y + l + border/2, min_max.match_loc.x + c + border/2);
                             }
                         }
-                        resize(number, number_14, Size(14, 14), 0, 0, INTER_AREA);
-                        converte(number_14, number_14_color);
+                        resize(number, number_14, Size(mnist.nlado, mnist.nlado), 0, 0, INTER_AREA);
                         int left, right, top, bottom;
                         bool localized;
                         left = number_14.cols;
@@ -210,7 +205,7 @@ int main(int argc, char* argv[]) {
                             for (int c = 0; c < number_14.cols; c++) {
                                 #pragma omp critical
                                 {
-                                    if (number_14(l, c) < 0.5) {
+                                    if (number_14(l, c) < 0.4) {
                                         number_14(l, c) = 0;
                                     } else {
                                         number_14(l, c) = 1;
@@ -233,19 +228,24 @@ int main(int argc, char* argv[]) {
                             }
                         }
                         Mat_<FLT> d;
-                        Mat_<FLT> d_big;
                         if (!(left < right && top < bottom)) {
-                            localized = false;
-                            d.create(14, 14);
-                            d.setTo(128);
+                            found_number = false;
+                            d.create(mnist.nlado, mnist.nlado);
+                            d.setTo(0.0);
                         } else {
-                            localized = true;
-                            Mat_<FLT> roi(number_14, Rect(left, top, right - left + 1, bottom - top + 1));
-                            resize(roi, d, Size(14, 14), 0, 0, INTER_AREA);
+                            if (min_max.max_val > 0.15 || min_max_normed.max_val > 0.35) {
+                                found_number = true;
+                                Mat_<FLT> roi(number_14, Rect(left, top, right - left + 1, bottom - top + 1));
+                                resize(roi, d, Size(mnist.nlado, mnist.nlado), 0, 0, INTER_AREA);
+                            } else {
+                                found_number = false;
+                                d.create(mnist.nlado, mnist.nlado);
+                                d.setTo(0.0);
+                            }
                         }
                         for (int l = 0; l < d.rows; l++) {
                             for (int c = 0; c < d.cols; c++) {
-                                qx2(0, l * number_14.cols + c) = d(l, c);
+                                qx2(0, l * d.cols + c) = d(l, c);
                             }
                         }
                         int result_recon;
@@ -253,16 +253,13 @@ int main(int argc, char* argv[]) {
                         std::vector<float> dists(1);
                         index.knnSearch(qx2, indexes, dists, 1);
                         result_recon = mnist.ay(indexes[0]);
-                        resize(d, number_big, Size(200, 200), 0, 0, INTER_AREA);
-                        Mat_<COR> out;
-                        Mat_<COR> number_big_color;
-                        if (min_max.max_val > 0.3 && min_max_normed.max_val > 0.58) {
-                            found_number = true;
-                            putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
-                        } else {
-                            found_number = false;
-                        }
+                        // if (min_max.max_val > 0.3 && min_max_normed.max_val > 0.58) {
+                        //     found_number = true;
+                        // } else {
+                        //     found_number = false;
+                        // }
                         if (found_number) {
+                            putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
                             client.sendUint(result_recon);
                             std::cout << "Detectou número: " << result_recon << std::endl;
                         } else {
@@ -272,12 +269,11 @@ int main(int argc, char* argv[]) {
                     } else {
                         found_box = false;
                         client.sendUint(30);
-                        std::cout << "Não tem placa direito" << std::endl;
+                        std::cout << "Placa ta muito perto" << std::endl;
                     }
                 } else {
                     client.sendUint(30);
                 }
-                // flip(next_frame, next_frame, -1);
             } else {
                 found_box = false;
                 client.sendUint(30);
@@ -286,7 +282,7 @@ int main(int argc, char* argv[]) {
             // client.receiveUint(finished);
         } else if (mode == 2) {
             client.sendUint(gui.getEstado());
-            putText(received_image, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
+            putText(next_frame, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
         }
 
         // output = grudaH(gui.getWindow(), received_image);

@@ -159,7 +159,6 @@ int main(int argc, char* argv[]) {
         client.sendUint(mode);
 
         if (mode == 1) {
-            std::cout << "Modo automático" << std::endl;
             putText(next_frame, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);

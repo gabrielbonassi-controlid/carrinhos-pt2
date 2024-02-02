@@ -4,7 +4,7 @@
 #include "carrinho.hpp"
 #include <chrono>
 
-#define compensa 9
+#define compensa 11
 
 CARRINHO::CARRINHO()
 {   

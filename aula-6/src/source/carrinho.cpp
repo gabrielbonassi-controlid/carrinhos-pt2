@@ -4,6 +4,8 @@
 #include "carrinho.hpp"
 #include <chrono>
 
+#define compensa 9
+
 CARRINHO::CARRINHO()
 {   
     std::cout << "Inicializando carrinho..." << std::endl;
@@ -33,7 +35,7 @@ void CARRINHO::stop()
 
 
 void CARRINHO::move_forward() {
-    softPwmWrite(motor::esq_frente, speed::fullspeed);
+    softPwmWrite(motor::esq_frente, speed::fullspeed - compensa);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
     softPwmWrite(motor::dir_frente, speed::fullspeed);
     softPwmWrite(motor::dir_tras, speed::stopspeed);
@@ -55,13 +57,13 @@ void CARRINHO::move_forward(int dist, bool direction) {
 
 void CARRINHO::move_backward() {
     softPwmWrite(motor::esq_frente, speed::stopspeed);
-    softPwmWrite(motor::esq_tras, speed::fullspeed);
+    softPwmWrite(motor::esq_tras, speed::fullspeed - compensa);
     softPwmWrite(motor::dir_frente, speed::stopspeed);
     softPwmWrite(motor::dir_tras, speed::fullspeed);
 }
 
 void CARRINHO::move_right() {
-    softPwmWrite(motor::esq_frente, speed::fullspeed);
+    softPwmWrite(motor::esq_frente, speed::fullspeed - compensa);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
     softPwmWrite(motor::dir_frente, speed::stopspeed);
     softPwmWrite(motor::dir_tras, speed::fullspeed);
@@ -69,34 +71,34 @@ void CARRINHO::move_right() {
 
 void CARRINHO::move_left() {
     softPwmWrite(motor::esq_frente, speed::stopspeed);
-    softPwmWrite(motor::esq_tras, speed::fullspeed);
+    softPwmWrite(motor::esq_tras, speed::fullspeed - compensa);
     softPwmWrite(motor::dir_frente, speed::fullspeed);
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
 void CARRINHO::move_bottom_right() {
     softPwmWrite(motor::esq_frente, speed::stopspeed);
-    softPwmWrite(motor::esq_tras, speed::fullspeed);
+    softPwmWrite(motor::esq_tras, speed::fullspeed - compensa);
     softPwmWrite(motor::dir_frente, speed::stopspeed);
     softPwmWrite(motor::dir_tras, speed::halfspeed);
 }
 
 void CARRINHO::move_bottom_left() {
     softPwmWrite(motor::esq_frente, speed::stopspeed);
-    softPwmWrite(motor::esq_tras, speed::halfspeed);
+    softPwmWrite(motor::esq_tras, speed::halfspeed - compensa);
     softPwmWrite(motor::dir_frente, speed::stopspeed);
     softPwmWrite(motor::dir_tras, speed::fullspeed);
 }
 
 void CARRINHO::move_top_right() {
-    softPwmWrite(motor::esq_frente, speed::fullspeed);
+    softPwmWrite(motor::esq_frente, speed::fullspeed - compensa);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
     softPwmWrite(motor::dir_frente, speed::halfspeed);
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
 void CARRINHO::move_top_left() {
-    softPwmWrite(motor::esq_frente, speed::halfspeed);
+    softPwmWrite(motor::esq_frente, speed::halfspeed - compensa);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
     softPwmWrite(motor::dir_frente, speed::fullspeed);
     softPwmWrite(motor::dir_tras, speed::stopspeed);

@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Modo automático" << std::endl;
             putText(received_image, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             // next_frame = received_image.clone();
-            flip(next_frame, next_frame, -1);
+            // flip(next_frame, next_frame, -1);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
             next_size = bestTemplateSize(0, quadrado, next_frame_flt);
@@ -307,7 +307,7 @@ int main(int argc, char* argv[]) {
                 } else {
                     client.sendUint(30);
                 }
-                flip(next_frame, next_frame, -1);
+                // flip(next_frame, next_frame, -1);
             } else {
                 found_box = false;
                 client.sendUint(30);

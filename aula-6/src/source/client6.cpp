@@ -106,11 +106,12 @@ int main(int argc, char* argv[]) {
     le(quadrado, quadrado_file);
 
     int ch;
-    int mode = 2;
+    int mode = 1;
     int linha = 1;
     uint32_t finished = 0;
 
     // le primeiro frame do video
+    VideoCapture vi("/home/gabriel-controlid/poli/carrinhos-pt2/aula-6/capturado.avi");
     Mat_<COR> next_frame;
     Mat_<FLT> next_frame_flt;
     cv::Point mid_frame;
@@ -128,6 +129,7 @@ int main(int argc, char* argv[]) {
     VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
     int next_size = 0; int last_size = 0;
     do {
+        vi >> next_frame;
         client.receiveImgComp(received_image);
         gui.resetWindow();
         gui.paintButton();
@@ -156,8 +158,9 @@ int main(int argc, char* argv[]) {
         client.sendUint(mode);
 
         if (mode == 1) {
+            std::cout << "Modo automático" << std::endl;
             putText(received_image, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
-            next_frame = received_image.clone();
+            // next_frame = received_image.clone();
             flip(next_frame, next_frame, -1);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
@@ -171,7 +174,7 @@ int main(int argc, char* argv[]) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
                 minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
-                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.7) {
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 400 && min_max_normed.max_val > 0.5) {
                     if (min_max.max_val > min_max_normed.max_val) {
                         min_max.match_loc = min_max.max_loc;
                     } else {
@@ -202,25 +205,29 @@ int main(int argc, char* argv[]) {
                         right = 0;
                         top = number_14.rows;
                         bottom = 0;
+                        #pragma omp parallel for
                         for (int l = 0; l < number_14.rows; l++) {
                             for (int c = 0; c < number_14.cols; c++) {
-                                if (number_14(l, c) < 0.5) {
-                                    number_14(l, c) = 0;
-                                } else {
-                                    number_14(l, c) = 1;
-                                }
-                                if (number_14(l, c) != 1) {
-                                    if (c < left) {
-                                        left = c;
+                                #pragma omp critical
+                                {
+                                    if (number_14(l, c) < 0.5) {
+                                        number_14(l, c) = 0;
+                                    } else {
+                                        number_14(l, c) = 1;
                                     }
-                                    if (c > right) {
-                                        right = c;
-                                    }
-                                    if (l < top) {
-                                        top = l;
-                                    }
-                                    if (l > bottom) {
-                                        bottom = l;
+                                    if (number_14(l, c) != 1) {
+                                        if (c < left) {
+                                            left = c;
+                                        }
+                                        if (c > right) {
+                                            right = c;
+                                        }
+                                        if (l < top) {
+                                            top = l;
+                                        }
+                                        if (l > bottom) {
+                                            bottom = l;
+                                        }
                                     }
                                 }
                             }
@@ -251,8 +258,7 @@ int main(int argc, char* argv[]) {
                         Mat_<COR> number_big_color;
                         if (min_max.max_val > 0.2 && min_max_normed.max_val > 0.5) {
                             found_number = true;
-                            // putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
-                            // gui.putDigit(result_recon);
+                            putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
                             // client.sendUint(1);
                         } else {
                             found_number = false;
@@ -293,7 +299,13 @@ int main(int argc, char* argv[]) {
                             client.sendUint(30);
                             std::cout << "Não detectou número" << std::endl;
                         }
+                    } else {
+                        found_box = false;
+                        client.sendUint(30);
+                        std::cout << "Não tem placa direito" << std::endl;
                     }
+                } else {
+                    client.sendUint(30);
                 }
                 flip(next_frame, next_frame, -1);
             } else {
@@ -301,7 +313,7 @@ int main(int argc, char* argv[]) {
                 client.sendUint(30);
                 std::cout << "Não tem placa" << std::endl;
             }
-            client.receiveUint(finished);
+            // client.receiveUint(finished);
         } else if (mode == 2) {
             client.sendUint(gui.getEstado());
             putText(received_image, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);

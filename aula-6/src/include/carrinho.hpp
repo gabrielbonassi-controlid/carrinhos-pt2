@@ -9,6 +9,8 @@
 #include <softPwm.h>
 #include <cekeikon.h>
 #include <stdio.h>
+#include <thread>
+#include <chrono>
 
 class CARRINHO
 {
@@ -53,7 +55,7 @@ public:
     void turn90right(TimePoint &t1, bool &finished);
     void turn180left(TimePoint &t1, bool &finished);
     void turn180right(TimePoint &t1, bool &finished);
-    void move_under(TimePoint &t1, bool &finished);
+    void move_under(const std::chrono::high_resolution_clock::time_point &t1, bool &finished);
 };
 
 #endif // CARRINHO_HPP_

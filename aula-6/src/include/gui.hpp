@@ -21,10 +21,8 @@ class GUI {
         ~GUI();
 
         static void on_mouse(int event, int c, int l, int flags, void* userdata);
-        void paintButton(int button);
+        void paintButton();
         void resetWindow();
-        void putDigit(int& digit);
-        void putMode(std::string mode);
         void showWindow();
 
         /*

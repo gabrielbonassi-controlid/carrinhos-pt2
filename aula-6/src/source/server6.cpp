@@ -76,10 +76,13 @@ int main(int argc, char *argv[]) {
     {
         erro("Erro ao abrir a camera\n");
     }
-    uint32_t digit, command, ch, mode;
+    uint32_t digit, command, ch;
+    uint32_t mode = 2;
     uint32_t received = 0;
     Mat_<COR> frame;
     bool finished;
+    TimePoint t1;
+    int digit_copy;
 
 
     do {
@@ -93,24 +96,46 @@ int main(int argc, char *argv[]) {
         server.receiveUint(mode);
         if (mode == 1) { // automático
             server.receiveUint(digit);
-            TimePoint t1;
-            if (digit == 0 || digit == 1) {
-                carrinho.stop();
-                finished = true;
-            } else if (digit == 2) {
-                carrinho.turn180left(t1, finished);
-            } else if (digit == 3) {
-                carrinho.turn180right(t1, finished);
-            } else if (digit == 4 || digit == 5) {
-                carrinho.move_under(t1, finished);
-            } else if (digit == 6 || digit == 7) {
-                carrinho.turn90left(t1, finished);
-            } else if (digit == 8 || digit == 9) {
-                carrinho.turn90right(t1, finished);
+            digit_copy = digit;
+            if (finished) {
+                t1 = timePoint();
+                if (digit == 0 || digit == 1) {
+                    carrinho.stop();
+                    finished = true;
+                } else if (digit == 2) {
+                    carrinho.turn180left(t1, finished);
+                } else if (digit == 3) {
+                    carrinho.turn180right(t1, finished);
+                } else if (digit == 4 || digit == 5) {
+                    carrinho.move_under(t1, finished);
+                } else if (digit == 6 || digit == 7) {
+                    carrinho.turn90left(t1, finished);
+                } else if (digit == 8 || digit == 9) {
+                    carrinho.turn90right(t1, finished);
+                } else {
+                    carrinho.stop();
+                    finished = true;
+                }
             } else {
-                carrinho.stop();
-                finished = true;
+                if (digit_copy == 0 || digit_copy == 1) {
+                    carrinho.stop();
+                    finished = true;
+                } else if (digit_copy == 2) {
+                    carrinho.turn180left(t1, finished);
+                } else if (digit_copy == 3) {
+                    carrinho.turn180right(t1, finished);
+                } else if (digit_copy == 4 || digit_copy == 5) {
+                    carrinho.move_under(t1, finished);
+                } else if (digit_copy == 6 || digit_copy == 7) {
+                    carrinho.turn90left(t1, finished);
+                } else if (digit_copy == 8 || digit_copy == 9) {
+                    carrinho.turn90right(t1, finished);
+                } else {
+                    carrinho.stop();
+                    finished = true;
+                }
             }
+            server.sendUint(static_cast<uint32_t>(finished))
         } else if (mode == 2) { //manual
             server.receiveUint(command);
             if (command >= static_cast<uint32_t>(Commands::DEFAULT) && command <= static_cast<uint32_t>(Commands::DIAG_INF_RIGHT)) {

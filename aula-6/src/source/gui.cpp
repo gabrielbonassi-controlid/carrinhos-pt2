@@ -3,8 +3,6 @@
 GUI::GUI() {
     _window = Mat_<COR>(240, 240, COR(128, 128, 128));
     resetWindow();
-    namedWindow("_window");
-    setMouseCallback("_window", on_mouse);
 }
 
 GUI::~GUI() {}
@@ -38,7 +36,7 @@ void GUI::on_mouse(int event, int c, int l, int flags, void* userdata) {
     }
 }
 
-void GUI::paintButton(int button) {
+void GUI::paintButton() {
     COR red(0, 0, 255);
     switch (_estado) {
         case DIAG_SUP_LEFT:
@@ -113,14 +111,6 @@ void GUI::resetWindow() {
     flecha(_window, 60, 180, 20, 220, red, 2);   // diagonal CIMA/DIREITA
     flecha(_window, 180, 60, 220, 20, red, 2);   // Diagonal BAIXO/ESQUERDA
     flecha(_window, 180, 180, 220, 220, red, 2); // Diagonal BAIXO/DIREITA
-}
-
-void GUI::putDigit(int& digit) {
-    putText(_window, to_string(digit), Point(50, 50), 0, 2, Scalar(0, 0, 255), 1, 8);
-}
-
-void GUI::putMode(std::string mode) {
-    putText(_window, mode, Point(50, 190), 0, 2, Scalar(0, 0, 255), 1, 8);
 }
 
 void GUI::showWindow() {

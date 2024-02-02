@@ -146,6 +146,7 @@ void CARRINHO::turn180right(TimePoint &t1, bool &finished) {
 }
 
 void CARRINHO::move_under(TimePoint &t1, bool &finished) {
+    std::cout << "Passando pela placa" << std::endl;
     TimePoint t2 = timePoint();
     double t = timeSpan(t1, t2);
     if (t < 2.0) {

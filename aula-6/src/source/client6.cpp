@@ -98,13 +98,17 @@ int main(int argc, char* argv[]) {
     Mat_<COR> output;
 
     GUI gui;
+    namedWindow("Janela");
+    setMouseCallback("Janela", gui.on_mouse);
     // leitura do quadrado
     Mat_<FLT> quadrado;
     Mat_<FLT> quadrado_aux;
     le(quadrado, quadrado_file);
 
     int ch;
-    int mode = 0;
+    int mode = 2;
+    int linha = 1;
+    uint32_t finished = 0;
 
     // le primeiro frame do video
     Mat_<COR> next_frame;
@@ -125,12 +129,13 @@ int main(int argc, char* argv[]) {
     int next_size = 0; int last_size = 0;
     do {
         client.receiveImgComp(received_image);
-        gui.setWindow(received_image);
         gui.resetWindow();
-        client.sendUint(1); // recebido
-
-        if (recording) {
-            vo << received_image;
+        gui.paintButton();
+        if (!received_image.empty()) {
+            client.sendUint(1); // recebido
+        } else {
+            client.sendUint(0); // nao recebido
+            break;
         }
         ch = waitKey(25);
         ch = ch % 256;
@@ -140,29 +145,27 @@ int main(int argc, char* argv[]) {
           client.sendUint(26); // senao envia 26
 
         if (gui.getEstado() == 5) {
-            if (mode == 2 || mode == 0) {
+            if (mode == 2) {
                 mode = 1;
-                gui.putMode(std::string("Auto"));
             } else if (mode == 1) {
                 mode = 2;
-                gui.putMode(std::string("Manual"));
+            } else {
+                mode = 2;
             }
         }
         client.sendUint(mode);
 
         if (mode == 1) {
+            putText(received_image, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             next_frame = received_image.clone();
             flip(next_frame, next_frame, -1);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
-    
             next_size = bestTemplateSize(0, quadrado, next_frame_flt);
             Mat_<FLT> quadrado_temp;
             resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
             quadrado_temp = somaAbsDois(dcReject(quadrado_temp, 1.0));
-    
             matchTemplate(next_frame_flt, quadrado_temp, result, CV_TM_CCORR);
-    
             minMaxLoc(result, &min_max.min_val, &min_max.max_val, &min_max.min_loc, &min_max.max_loc);
             if (min_max.max_val > 0.18) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
@@ -199,7 +202,6 @@ int main(int argc, char* argv[]) {
                         right = 0;
                         top = number_14.rows;
                         bottom = 0;
-    
                         for (int l = 0; l < number_14.rows; l++) {
                             for (int c = 0; c < number_14.cols; c++) {
                                 if (number_14(l, c) < 0.5) {
@@ -207,7 +209,6 @@ int main(int argc, char* argv[]) {
                                 } else {
                                     number_14(l, c) = 1;
                                 }
-    
                                 if (number_14(l, c) != 1) {
                                     if (c < left) {
                                         left = c;
@@ -224,7 +225,6 @@ int main(int argc, char* argv[]) {
                                 }
                             }
                         }
-    
                         Mat_<FLT> d;
                         Mat_<FLT> d_big;
                         if (!(left < right && top < bottom)) {
@@ -236,7 +236,6 @@ int main(int argc, char* argv[]) {
                             Mat_<FLT> roi(number_14, Rect(left, top, right - left + 1, bottom - top + 1));
                             resize(roi, d, Size(14, 14), 0, 0, INTER_AREA);
                         }
-    
                         for (int l = 0; l < d.rows; l++) {
                             for (int c = 0; c < d.cols; c++) {
                                 qx2(0, l * number_14.cols + c) = d(l, c);
@@ -252,25 +251,66 @@ int main(int argc, char* argv[]) {
                         Mat_<COR> number_big_color;
                         if (min_max.max_val > 0.2 && min_max_normed.max_val > 0.5) {
                             found_number = true;
-                            putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
+                            // putText(next_frame, to_string(result_recon), Point(min_max.max_loc.x + next_size / 2, min_max.max_loc.y + next_size / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 255), 2);
+                            // gui.putDigit(result_recon);
                             // client.sendUint(1);
                         } else {
                             found_number = false;
                             // client.sendUint(0);
                         }
-                        client.sendUint(result_recon);
+                        if (found_number) {
+                            client.sendUint(result_recon);
+                            std::cout << "Detectou número: " << result_recon << std::endl;
+                            // switch (result_recon) {
+                            //     case 2:
+                            //         wait(2800);
+                            //         break;
+                            //     case 3:
+                            //         wait(2800);
+                            //         break;
+                            //     case 4:
+                            //         wait(2000);
+                            //         break;
+                            //     case 5:
+                            //         wait(2000);
+                            //         break;
+                            //     case 6:
+                            //         wait(1400);
+                            //         break;
+                            //     case 7:
+                            //         wait(1400);
+                            //         break;
+                            //     case 8:
+                            //         wait(1400);
+                            //         break;
+                            //     case 9:
+                            //         wait(1400);
+                            //         break;
+                            //     default:
+                            //         break;
+                            // }
+                        } else {
+                            client.sendUint(30);
+                            std::cout << "Não detectou número" << std::endl;
+                        }
                     }
                 }
+                flip(next_frame, next_frame, -1);
             } else {
                 found_box = false;
+                client.sendUint(30);
+                std::cout << "Não tem placa" << std::endl;
             }
-            flip(next_frame, next_frame, -1);
+            client.receiveUint(finished);
         } else if (mode == 2) {
             client.sendUint(gui.getEstado());
+            putText(received_image, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
         }
 
-        output = grudaH(gui.getWindow(), next_frame);
-        vo << output;
+        output = grudaH(gui.getWindow(), received_image);
+        if (recording) {
+            vo << output;
+        }
         imshow("Janela", output);        
 
     } while (ch != 27);

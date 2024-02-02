@@ -82,7 +82,8 @@ int main(int argc, char *argv[]) {
     uint32_t received = 0;
     Mat_<COR> frame;
     bool finished = true;
-    TimePoint t1;
+    // TimePoint t1;
+    std::chrono::high_resolution_clock::time_point t1;
     uint32_t digit_copy;
 
 
@@ -103,7 +104,7 @@ int main(int argc, char *argv[]) {
             if (finished) {
                 std::cout << "Começando um comando" << std::endl;
                 digit_copy = digit;
-                t1 = timePoint();
+                t1 = std::chrono::high_resolution_clock::now();
                 if (digit == 0 || digit == 1) {
                     carrinho.stop();
                     finished = true;

@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "chrono": "cpp",
+        "*.inc": "cpp",
+        "bitset": "cpp",
+        "algorithm": "cpp"
+    }
+}

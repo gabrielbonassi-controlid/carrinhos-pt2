@@ -25,43 +25,43 @@ enum Commands {
     DIAG_INF_LEFT,
     DOWN,
     DIAG_INF_RIGHT
-}
+};
 
-int fsm(int last_state, bool start, CARRINHO carro, int count[10], int curr_digit, TimePoint& t, bool& finished, bool& recognized) {
-    switch (last_state) {
-        case IDLE:
-            if (start) {
-                carro.stop();
-                finished = true;
-                return DETECT_BOX;
-            }
-            break;
-        case DETECT_BOX:
-            std::cout << "seguindo placa" << std::endl
-            if (recognized) {
-                carro.move_forward(t, finished);
-                return STOP_DETECTED;
-            }
-            break;
-        case STOP_DETECTED:
-            carro.stop();
-            if (finished) {
-                return READ_DIGIT;
-            }
-            break;
-        case READ_DIGIT:
-            std::cout << "reconhecendo digito" << std::endl;
+// int fsm(int last_state, bool start, CARRINHO carro, int count[10], int curr_digit, TimePoint& t, bool& finished, bool& recognized) {
+//     switch (last_state) {
+//         case IDLE:
+//             if (start) {
+//                 carro.stop();
+//                 finished = true;
+//                 return DETECT_BOX;
+//             }
+//             break;
+//         case DETECT_BOX:
+//             std::cout << "seguindo placa" << std::endl
+//             if (recognized) {
+//                 carro.move_forward(t, finished);
+//                 return STOP_DETECTED;
+//             }
+//             break;
+//         case STOP_DETECTED:
+//             carro.stop();
+//             if (finished) {
+//                 return READ_DIGIT;
+//             }
+//             break;
+//         case READ_DIGIT:
+//             std::cout << "reconhecendo digito" << std::endl;
 
-            break;
-        case EXEC_DIGIT:
-            break;
-        case STOP_FINISHED:
-            break;
-        case EXIT:
-            break;
-    }
+//             break;
+//         case EXEC_DIGIT:
+//             break;
+//         case STOP_FINISHED:
+//             break;
+//         case EXIT:
+//             break;
+//     }
 
-}
+// }
 
 int main(int argc, char *argv[]) {
     connection::SERVER server;
@@ -76,28 +76,33 @@ int main(int argc, char *argv[]) {
     {
         erro("Erro ao abrir a camera\n");
     }
-    uint32_t digit, command, ch;
+    uint32_t command, ch;
+    uint32_t digit = 0;
     uint32_t mode = 2;
     uint32_t received = 0;
     Mat_<COR> frame;
-    bool finished;
+    bool finished = true;
     TimePoint t1;
-    int digit_copy;
+    uint32_t digit_copy;
 
 
     do {
         vi >> frame;
         server.sendImgComp(frame);
-        while (received == 0) {
-            server.receiveUint(received);
-        }
+        // while (received == 0) {
+        //     server.receiveUint(received);
+        // }
+        server.receiveUint(received);
         server.receiveUint(ch);
         received = 0;
         server.receiveUint(mode);
         if (mode == 1) { // automático
+            std::cout << "Modo automático" << std::endl;
             server.receiveUint(digit);
-            digit_copy = digit;
+            std::cout << "Dígito recebido: " << digit << std::endl;
             if (finished) {
+                digit_copy = digit;
+                std::cout << "Ainda não acabou" << std::endl;
                 t1 = timePoint();
                 if (digit == 0 || digit == 1) {
                     carrinho.stop();
@@ -135,12 +140,12 @@ int main(int argc, char *argv[]) {
                     finished = true;
                 }
             }
-            server.sendUint(static_cast<uint32_t>(finished))
+            // server.sendUint(static_cast<uint32_t>(finished));
         } else if (mode == 2) { //manual
             server.receiveUint(command);
             if (command >= static_cast<uint32_t>(Commands::DEFAULT) && command <= static_cast<uint32_t>(Commands::DIAG_INF_RIGHT)) {
                 std::cout << "State: " << command << std::endl;
-                switch (static_cast<State>(command)) {
+                switch (static_cast<Commands>(command)) {
                 case UP:
                     std::cout << "Pra frente" << std::endl;
                     carrinho.move_forward();
@@ -186,5 +191,5 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-    }
+    } while (ch != 27);
 }

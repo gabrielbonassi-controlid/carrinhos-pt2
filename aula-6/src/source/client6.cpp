@@ -319,7 +319,8 @@ int main(int argc, char* argv[]) {
             putText(received_image, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
         }
 
-        output = grudaH(gui.getWindow(), received_image);
+        // output = grudaH(gui.getWindow(), received_image);
+        output = grudaH(gui.getWindow(), next_frame);
         if (recording) {
             vo << output;
         }

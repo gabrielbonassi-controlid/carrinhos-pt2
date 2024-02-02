@@ -101,8 +101,8 @@ int main(int argc, char *argv[]) {
             server.receiveUint(digit);
             std::cout << "Dígito recebido: " << digit << std::endl;
             if (finished) {
+                std::cout << "Começando um comando" << std::endl;
                 digit_copy = digit;
-                std::cout << "Ainda não acabou" << std::endl;
                 t1 = timePoint();
                 if (digit == 0 || digit == 1) {
                     carrinho.stop();
@@ -122,6 +122,7 @@ int main(int argc, char *argv[]) {
                     finished = true;
                 }
             } else {
+                std::cout << "Ainda não acabou" << std::endl;
                 if (digit_copy == 0 || digit_copy == 1) {
                     carrinho.stop();
                     finished = true;

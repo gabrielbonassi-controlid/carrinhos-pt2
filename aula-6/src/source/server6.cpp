@@ -108,6 +108,7 @@ int main(int argc, char *argv[]) {
                 t1 = std::chrono::high_resolution_clock::now();
                 if (digit == 0 || digit == 1) {
                     carrinho.stop();
+                    finished = true;
                 } else if (digit == 2) {
                     carrinho.turn180left(t1, finished);
                 } else if (digit == 3) {
@@ -120,6 +121,7 @@ int main(int argc, char *argv[]) {
                     carrinho.turn90right(t1, finished);
                 } else {
                     carrinho.stop();
+                    finished = true;
                 }
             } else {
                 std::cout << "Ainda não acabou" << std::endl;

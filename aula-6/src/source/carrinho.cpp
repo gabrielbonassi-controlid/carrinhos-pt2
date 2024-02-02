@@ -107,7 +107,7 @@ void CARRINHO::turn90left(TimePoint &t1, bool &finished) {
     // double t = timeSpan(t1, t2);
     auto t2 = std::chrono::high_resolution_clock::now();
     // double t = timeSpan(t1, t2);
-    auto t = std::chrono::duration_cast<std::chrono::seconds>(t1 - t2);
+    auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t.count() << std::endl;
     if (t.count() < 1.4) {
         this->move_left();
@@ -122,7 +122,7 @@ void CARRINHO::turn90right(TimePoint &t1, bool &finished) {
     // double t = timeSpan(t1, t2);
     auto t2 = std::chrono::high_resolution_clock::now();
     // double t = timeSpan(t1, t2);
-    auto t = std::chrono::duration_cast<std::chrono::seconds>(t1 - t2);
+    auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t.count() << std::endl;
     if (t.count() < 1.4) {
         this->move_right();
@@ -137,7 +137,7 @@ void CARRINHO::turn180left(TimePoint &t1, bool &finished) {
     // double t = timeSpan(t1, t2);
     auto t2 = std::chrono::high_resolution_clock::now();
     // double t = timeSpan(t1, t2);
-    auto t = std::chrono::duration_cast<std::chrono::seconds>(t1 - t2);
+    auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t.count() << std::endl;
     if (t.count() < 2.8) {
         this->move_left();
@@ -152,7 +152,7 @@ void CARRINHO::turn180right(TimePoint &t1, bool &finished) {
     // double t = timeSpan(t1, t2);
     auto t2 = std::chrono::high_resolution_clock::now();
     // double t = timeSpan(t1, t2);
-    auto t = std::chrono::duration_cast<std::chrono::seconds>(t1 - t2);
+    auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t.count() << std::endl;
     if (t.count() < 2.8) {
         this->move_right();
@@ -166,7 +166,7 @@ void CARRINHO::move_under(const std::chrono::high_resolution_clock::time_point &
     std::cout << "Passando pela placa" << std::endl;
     auto t2 = std::chrono::high_resolution_clock::now();
     // double t = timeSpan(t1, t2);
-    auto t = std::chrono::duration_cast<std::chrono::seconds>(t1 - t2);
+    auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t.count() << std::endl;
     std::chrono::seconds t3(2);
     if (t.count() < 2.0) {

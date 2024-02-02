@@ -233,7 +233,7 @@ int main(int argc, char* argv[]) {
                             d.create(mnist.nlado, mnist.nlado);
                             d.setTo(0.0);
                         } else {
-                            if (min_max.max_val > 0.15 || min_max_normed.max_val > 0.35) {
+                            if (min_max.max_val > 0.3 || min_max_normed.max_val > 0.58) {
                                 found_number = true;
                                 Mat_<FLT> roi(number_14, Rect(left, top, right - left + 1, bottom - top + 1));
                                 resize(roi, d, Size(mnist.nlado, mnist.nlado), 0, 0, INTER_AREA);

@@ -87,7 +87,7 @@ void DEVICE::sendImgComp(const Mat_<COR> &img) {
     erro("Erro: img não é contínua!");
   }
   vector<BYTE> vb;
-  vector<int> param{CV_IMWRITE_JPEG_QUALITY, 80};
+  vector<int> param{CV_IMWRITE_JPEG_QUALITY, 95};
   imencode(".jpg", img, vb, param);
   sendVb(vb);
 }

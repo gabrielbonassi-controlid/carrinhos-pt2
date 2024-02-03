@@ -9,6 +9,9 @@
 using namespace std;
 using namespace connection;
 
+#define WIDTH 640
+#define HEIGHT 480
+
 struct MIN_MAX_MATCH {
     double min_val;
     double max_val;
@@ -128,7 +131,7 @@ int main(int argc, char* argv[]) {
     
 
     // video de saida
-    VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
+    VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(WIDTH, HEIGHT));
     int next_size = 0; int last_size = 0;
     do {
         // vi >> next_frame;
@@ -183,7 +186,7 @@ int main(int argc, char* argv[]) {
                     }
                     found_box = true;
                     drawBox(next_size, quadrado, next_frame);
-                    if ((320 - min_max.match_loc.x) > 10 && (320 - min_max.match_loc.x) < 310) {
+                    if ((WIDTH - min_max.match_loc.x) > 10 && (HEIGHT - min_max.match_loc.x) < (HEIGHT-10)) {
                         int cut = next_size * 0.4;
                         int border = next_size * (1 - 0.4);
                         Mat_<FLT> number(cut, cut);
@@ -291,9 +294,7 @@ int main(int argc, char* argv[]) {
 
         // output = grudaH(gui.getWindow(), received_image);
         output = grudaH(gui.getWindow(), next_frame);
-        if (recording) {
-            vo << output;
-        }
+        vo << output;
         imshow("Janela", output);        
 
     } while (ch != 27);

@@ -27,41 +27,7 @@ enum Commands {
     DIAG_INF_RIGHT
 };
 
-// int fsm(int last_state, bool start, CARRINHO carro, int count[10], int curr_digit, TimePoint& t, bool& finished, bool& recognized) {
-//     switch (last_state) {
-//         case IDLE:
-//             if (start) {
-//                 carro.stop();
-//                 finished = true;
-//                 return DETECT_BOX;
-//             }
-//             break;
-//         case DETECT_BOX:
-//             std::cout << "seguindo placa" << std::endl
-//             if (recognized) {
-//                 carro.move_forward(t, finished);
-//                 return STOP_DETECTED;
-//             }
-//             break;
-//         case STOP_DETECTED:
-//             carro.stop();
-//             if (finished) {
-//                 return READ_DIGIT;
-//             }
-//             break;
-//         case READ_DIGIT:
-//             std::cout << "reconhecendo digito" << std::endl;
 
-//             break;
-//         case EXEC_DIGIT:
-//             break;
-//         case STOP_FINISHED:
-//             break;
-//         case EXIT:
-//             break;
-//     }
-
-// }
 
 int main(int argc, char *argv[]) {
     connection::SERVER server;
@@ -69,8 +35,8 @@ int main(int argc, char *argv[]) {
     server.waitConnection();
 
     VideoCapture vi(1);
-    vi.set(CV_CAP_PROP_FRAME_WIDTH, 320);
-    vi.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
+    vi.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+    vi.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
 
     if (!vi.isOpened())
     {

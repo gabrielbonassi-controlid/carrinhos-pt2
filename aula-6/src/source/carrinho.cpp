@@ -111,7 +111,7 @@ void CARRINHO::turn90left(TimePoint &t1, bool &finished) {
     // // double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 1.4) {
+    if (t < 0.7) {
         this->move_left();
     } else {
         finished = true;
@@ -126,7 +126,7 @@ void CARRINHO::turn90right(TimePoint &t1, bool &finished) {
     // // double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 1.4) {
+    if (t < 0.7) {
         this->move_right();
     } else {
         finished = true;
@@ -142,7 +142,7 @@ void CARRINHO::turn180left(TimePoint &t1, bool &finished) {
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     // std::cout << "Tempo percorrido: " << t.count() << std::endl;
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 2.8) {
+    if (t < 1.4) {
         this->move_left();
     } else {
         finished = true;
@@ -157,7 +157,7 @@ void CARRINHO::turn180right(TimePoint &t1, bool &finished) {
     // // double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 2.8) {
+    if (t < 1.4) {
         this->move_right();
     } else {
         finished = true;
@@ -171,7 +171,7 @@ void CARRINHO::move_under(const std::chrono::high_resolution_clock::time_point &
     double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 2.0) {
+    if (t < 1.4) {
         this->move_forward();
     } else {
         finished = true;

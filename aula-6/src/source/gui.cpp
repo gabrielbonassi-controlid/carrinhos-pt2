@@ -99,8 +99,8 @@ void GUI::resetWindow() {
     reta(_window, 0, 80, 240, 80, COR(0, 0, 0), 2);
     reta(_window, 0, 160, 240, 160, COR(0, 0, 0), 2);
 
-    reta(_window, 120, 110, 120, 130, red, 2);
-    reta(_window, 110, 120, 130, 120, red, 2);
+    // reta(_window, 120, 110, 120, 130, red, 2);
+    // reta(_window, 110, 120, 130, 120, red, 2);
 
     flecha(_window, 60, 120, 20, 120, red, 2);   // CIMA
     flecha(_window, 180, 120, 220, 120, red, 2); // BAIXO

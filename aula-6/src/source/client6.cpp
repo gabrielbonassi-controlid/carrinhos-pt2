@@ -104,6 +104,7 @@ int main(int argc, char* argv[]) {
     Mat_<FLT> quadrado;
     Mat_<FLT> quadrado_aux;
     le(quadrado, quadrado_file);
+    Mat_<COR> gui_window_temp = gui.getWindow();
 
     int ch;
     int mode = 1;
@@ -124,6 +125,7 @@ int main(int argc, char* argv[]) {
     MNIST mnist(14, true, true);
     mnist.le("/home/gabriel-controlid/poli/carrinhos-pt2/aula-6/mnist");
     flann::Index index(mnist.ax, flann::KDTreeIndexParams(4));
+    
 
     // video de saida
     VideoWriter vo(output_file, CV_FOURCC('X', 'V', 'I', 'D'), 30, Size(320, 240));
@@ -159,7 +161,8 @@ int main(int argc, char* argv[]) {
         client.sendUint(mode);
 
         if (mode == 1) {
-            putText(next_frame, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
+            putText(gui_window_temp, "A", Point(120, 120), 0, 2, Scalar(0, 0, 255), 1, 8);
+            // putText(next_frame, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
             next_size = bestTemplateSize(0, quadrado, next_frame_flt);
@@ -281,8 +284,10 @@ int main(int argc, char* argv[]) {
             // client.receiveUint(finished);
         } else if (mode == 2) {
             client.sendUint(gui.getEstado());
-            putText(next_frame, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
+            // putText(next_frame, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
+            putText(gui_window_temp, "M", Point(120, 120), 0, 2, Scalar(0, 0, 255), 1, 8);
         }
+        gui.setWindow(gui_window_temp);
 
         // output = grudaH(gui.getWindow(), received_image);
         output = grudaH(gui.getWindow(), next_frame);

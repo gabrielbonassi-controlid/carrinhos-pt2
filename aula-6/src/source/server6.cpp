@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
     server.waitConnection();
 
     VideoCapture vi(1);
-    vi.set(CV_CAP_PROP_FRAME_WIDTH, 640);
-    vi.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+    vi.set(CV_CAP_PROP_FRAME_WIDTH, 320);
+    vi.set(CV_CAP_PROP_FRAME_HEIGHT, 240);
 
     if (!vi.isOpened())
     {

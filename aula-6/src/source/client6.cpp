@@ -9,8 +9,8 @@
 using namespace std;
 using namespace connection;
 
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 320
+#define HEIGHT 240
 
 struct MIN_MAX_MATCH {
     double min_val;
@@ -178,7 +178,7 @@ int main(int argc, char* argv[]) {
                 resize(quadrado, quadrado_temp, Size(next_size, next_size), 0, 0, INTER_AREA);
                 matchTemplate(next_frame_flt, quadrado_temp, result_normed, CV_TM_CCOEFF_NORMED);
                 minMaxLoc(result_normed, &min_max_normed.min_val, &min_max_normed.max_val, &min_max_normed.min_loc, &min_max_normed.max_loc);
-                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 100 && min_max_normed.max_val > 0.35) {
+                if ((pow((min_max.max_loc.x - min_max_normed.max_loc.x), 2) + pow((min_max.max_loc.y - min_max_normed.max_loc.y), 2)) < 100 && min_max_normed.max_val > 0.28) {
                     if (min_max.max_val > min_max_normed.max_val) {
                         min_max.match_loc = min_max.max_loc;
                     } else {
@@ -238,7 +238,7 @@ int main(int argc, char* argv[]) {
                             d.create(mnist.nlado, mnist.nlado);
                             d.setTo(0.0);
                         } else {
-                            if (min_max.max_val > 0.3 || min_max_normed.max_val > 0.58) {
+                            if (min_max.max_val > 0.24 || min_max_normed.max_val > 0.35) {
                                 found_number = true;
                                 Mat_<FLT> roi(number_14, Rect(left, top, right - left + 1, bottom - top + 1));
                                 resize(roi, d, Size(mnist.nlado, mnist.nlado), 0, 0, INTER_AREA);

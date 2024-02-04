@@ -22,6 +22,11 @@ CARRINHO::CARRINHO()
 
 CARRINHO::~CARRINHO()
 {
+    std::cout << "Desligando carrinho..." << std::endl;
+    softPwmWrite(motor::esq_frente, speed::stopspeed);
+    softPwmWrite(motor::esq_tras, speed::stopspeed);
+    softPwmWrite(motor::dir_frente, speed::stopspeed);
+    softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
 void CARRINHO::stop()

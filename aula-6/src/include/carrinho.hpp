@@ -51,11 +51,11 @@ public:
     void move_top_left();
     void move_top_right();
 
-    void turn90left(TimePoint &t1, bool &finished);
-    void turn90right(TimePoint &t1, bool &finished);
-    void turn180left(TimePoint &t1, bool &finished);
-    void turn180right(TimePoint &t1, bool &finished);
-    void move_under(const std::chrono::high_resolution_clock::time_point &t1, bool &finished);
+    void turn90left(const TimePoint &t1, bool &finished);
+    void turn90right(const TimePoint &t1, bool &finished);
+    void turn180left(const TimePoint &t1, bool &finished);
+    void turn180right(const TimePoint &t1, bool &finished);
+    void move_under(const TimePoint &t1, bool &finished);
 };
 
 #endif // CARRINHO_HPP_

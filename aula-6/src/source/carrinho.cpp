@@ -42,7 +42,7 @@ void CARRINHO::stop()
 
 
 void CARRINHO::move_forward() {
-    softPwmWrite(motor::esq_frente, speed::overdrive);
+    softPwmWrite(motor::esq_frente, speed::overdrive - compensa);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
     softPwmWrite(motor::dir_frente, speed::overdrive);
     softPwmWrite(motor::dir_tras, speed::stopspeed);
@@ -111,7 +111,7 @@ void CARRINHO::move_top_left() {
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
-void CARRINHO::turn90left(TimePoint &t1, bool &finished) {
+void CARRINHO::turn90left(const TimePoint &t1, bool &finished) {
     TimePoint t2 = timePoint();
     double t = timeSpan(t1, t2);
     // auto t2 = std::chrono::high_resolution_clock::now();
@@ -126,7 +126,7 @@ void CARRINHO::turn90left(TimePoint &t1, bool &finished) {
     }
 }
 
-void CARRINHO::turn90right(TimePoint &t1, bool &finished) {
+void CARRINHO::turn90right(const TimePoint &t1, bool &finished) {
     TimePoint t2 = timePoint();
     double t = timeSpan(t1, t2);
     // auto t2 = std::chrono::high_resolution_clock::now();
@@ -141,7 +141,7 @@ void CARRINHO::turn90right(TimePoint &t1, bool &finished) {
     }
 }
 
-void CARRINHO::turn180left(TimePoint &t1, bool &finished) {
+void CARRINHO::turn180left(const TimePoint &t1, bool &finished) {
     TimePoint t2 = timePoint();
     double t = timeSpan(t1, t2);
     // auto t2 = std::chrono::high_resolution_clock::now();
@@ -157,7 +157,7 @@ void CARRINHO::turn180left(TimePoint &t1, bool &finished) {
     }
 }
 
-void CARRINHO::turn180right(TimePoint &t1, bool &finished) {
+void CARRINHO::turn180right(const TimePoint &t1, bool &finished) {
     TimePoint t2 = timePoint();
     double t = timeSpan(t1, t2);
     // auto t2 = std::chrono::high_resolution_clock::now();
@@ -172,7 +172,7 @@ void CARRINHO::turn180right(TimePoint &t1, bool &finished) {
     }
 }
 
-void CARRINHO::move_under(const std::chrono::high_resolution_clock::time_point &t1, bool &finished) {
+void CARRINHO::move_under(const TimePoint &t1, bool &finished) {
     // auto t2 = std::chrono::high_resolution_clock::now();
     TimePoint t2 = timePoint();
     double t = timeSpan(t1, t2);

@@ -40,9 +40,9 @@ void CARRINHO::stop()
 
 
 void CARRINHO::move_forward() {
-    softPwmWrite(motor::esq_frente, speed::fullspeed - compensa);
+    softPwmWrite(motor::esq_frente, speed::overdrive - compensa);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
-    softPwmWrite(motor::dir_frente, speed::fullspeed);
+    softPwmWrite(motor::dir_frente, speed::overdrive);
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
@@ -116,7 +116,7 @@ void CARRINHO::turn90left(TimePoint &t1, bool &finished) {
     // // double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 0.7) {
+    if (t < 1.4) {
         this->move_left();
     } else {
         finished = true;
@@ -131,7 +131,7 @@ void CARRINHO::turn90right(TimePoint &t1, bool &finished) {
     // // double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 0.7) {
+    if (t < 1.4) {
         this->move_right();
     } else {
         finished = true;
@@ -147,7 +147,7 @@ void CARRINHO::turn180left(TimePoint &t1, bool &finished) {
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     // std::cout << "Tempo percorrido: " << t.count() << std::endl;
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 1.4) {
+    if (t < 2.8) {
         this->move_left();
     } else {
         finished = true;
@@ -162,7 +162,7 @@ void CARRINHO::turn180right(TimePoint &t1, bool &finished) {
     // // double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 1.4) {
+    if (t < 2.8) {
         this->move_right();
     } else {
         finished = true;
@@ -176,7 +176,7 @@ void CARRINHO::move_under(const std::chrono::high_resolution_clock::time_point &
     double t = timeSpan(t1, t2);
     // auto t = std::chrono::duration_cast<std::chrono::seconds>(t2-t1);
     std::cout << "Tempo percorrido: " << t << std::endl;
-    if (t < 1.4) {
+    if (t < 1.8) {
         this->move_forward();
     } else {
         finished = true;

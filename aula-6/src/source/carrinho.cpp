@@ -6,7 +6,7 @@
 
 #define compensa 11
 #define TIME_90 1.0
-#define TIME_180 1.4
+#define TIME_180 1.3
 
 CARRINHO::CARRINHO()
 {   
@@ -42,7 +42,7 @@ void CARRINHO::stop()
 
 
 void CARRINHO::move_forward() {
-    softPwmWrite(motor::esq_frente, speed::overdrive - compensa);
+    softPwmWrite(motor::esq_frente, speed::overdrive);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
     softPwmWrite(motor::dir_frente, speed::overdrive);
     softPwmWrite(motor::dir_tras, speed::stopspeed);

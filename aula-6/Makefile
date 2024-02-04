@@ -17,6 +17,7 @@ endif
 
 OBJS_SERVER6 = $(OBJS_PATH)device.o $(OBJS_PATH)server.o $(OBJS_PATH)carrinho.o $(OBJS_PATH)server6.o
 OBJS_CLIENT6 = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)gui.o $(OBJS_PATH)client6.o
+OBJS_CLIENT6_ALT = $(OBJS_PATH)device.o $(OBJS_PATH)client.o $(OBJS_PATH)gui.o $(OBJS_PATH)client6_alt.o
 
 all: server client
 
@@ -32,11 +33,17 @@ server6: device.o server.o carrinho.o server6.o
 client6: device.o client.o gui.o client6.o
 	$(CXX) $(OBJS_CLIENT6) -o $(CURR_DIR)/$@ $(CXXFLAGS)
 
+client6_alt: device.o client.o gui.o client6_alt.o
+	$(CXX) $(OBJS_CLIENT6_ALT) -o $(CURR_DIR)/$@ $(CXXFLAGS)
+
 server6.o:
 	$(CXX) -c $(SRC_PATH)server6.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
 
 client6.o:
 	$(CXX) -c $(SRC_PATH)client6.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
+
+client6_alt.o:
+	$(CXX) -c $(SRC_PATH)client6_alt.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)
 
 device.o: $(INCLUDE_PATH)device.hpp $(SRC_PATH)device.cpp
 	$(CXX) -c $(SRC_PATH)device.cpp -o $(OBJS_PATH)$@ $(CXXFLAGS)

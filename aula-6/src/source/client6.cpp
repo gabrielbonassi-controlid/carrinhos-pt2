@@ -163,7 +163,7 @@ int main(int argc, char* argv[]) {
         client.sendUint(mode);
 
         if (mode == 1) {
-            putText(gui_window_temp, "A", Point(120, 120), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 2, 8, true);
+            putText(gui_window_temp, "A", Point(95, 145), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 2, 8);
             // putText(next_frame, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
@@ -284,7 +284,7 @@ int main(int argc, char* argv[]) {
         } else if (mode == 2) {
             client.sendUint(gui.getEstado());
             // putText(next_frame, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
-            putText(gui_window_temp, "M", Point(120, 150), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 2, 8, true);
+            putText(gui_window_temp, "M", Point(95, 145), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 2, 8);
         }
         gui.setWindow(gui_window_temp);
 

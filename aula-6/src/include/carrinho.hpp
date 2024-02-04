@@ -25,8 +25,8 @@ class CARRINHO
     enum speed {
         fullspeed = 70,
         overdrive = 100,
-        halfspeed = 40,
-        slowspeed = 20,
+        halfspeed = 50,
+        slowspeed = 40,
         stopspeed = 0
     };
 public:

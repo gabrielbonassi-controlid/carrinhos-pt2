@@ -56,9 +56,6 @@ int main(int argc, char *argv[]) {
     do {
         vi >> frame;
         server.sendImgComp(frame);
-        // while (received == 0) {
-        //     server.receiveUint(received);
-        // }
         server.receiveUint(received);
         server.receiveUint(ch);
         received = 0;
@@ -85,6 +82,9 @@ int main(int argc, char *argv[]) {
                     carrinho.turn90left(t1, finished);
                 } else if (digit == 8 || digit == 9) {
                     carrinho.turn90right(t1, finished);
+                } else if (digit == 15){ 
+                    carrinho.move_forward_slow();
+                    finished = true;
                 } else {
                     carrinho.stop();
                     finished = true;
@@ -103,11 +103,13 @@ int main(int argc, char *argv[]) {
                     carrinho.turn90left(t1, finished);
                 } else if (digit_copy == 8 || digit_copy == 9) {
                     carrinho.turn90right(t1, finished);
+                } else if (digit == 15){ 
+                    carrinho.move_forward_slow();
+                    finished = true;
                 } else {
                     carrinho.stop();
                 }
             }
-            // server.sendUint(static_cast<uint32_t>(finished));
         } else if (mode == 2) { //manual
             server.receiveUint(command);
             if (command >= static_cast<uint32_t>(Commands::DEFAULT) && command <= static_cast<uint32_t>(Commands::DIAG_INF_RIGHT)) {

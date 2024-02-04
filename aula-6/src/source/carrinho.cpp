@@ -62,6 +62,14 @@ void CARRINHO::move_forward(int dist, bool direction) {
     }
 }
 
+void CARRINHO::move_forward_slow() {
+    softPwmWrite(motor::esq_frente, speed::slowspeed);
+    softPwmWrite(motor::esq_tras, speed::stopspeed);
+    softPwmWrite(motor::dir_frente, speed::slowspeed);
+    softPwmWrite(motor::dir_tras, speed::stopspeed);
+
+}
+
 void CARRINHO::move_backward() {
     softPwmWrite(motor::esq_frente, speed::stopspeed);
     softPwmWrite(motor::esq_tras, speed::fullspeed - compensa);

@@ -122,7 +122,6 @@ int main(int argc, char* argv[]) {
     cv::Point mid_quadrado;
     uint32_t dist;
     uint32_t positive; // 1 = esquerda, 0 direita
-    bool found_box = false;
 
     // mnist
     MNIST mnist(14, true, true);
@@ -164,7 +163,7 @@ int main(int argc, char* argv[]) {
         client.sendUint(mode);
 
         if (mode == 1) {
-            putText(gui_window_temp, "A", Point(120, 120), 0, 2, Scalar(0, 0, 255), 1, 8);
+            putText(gui_window_temp, "A", Point(120, 120), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 2, 8, true);
             // putText(next_frame, "A", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
             converte(next_frame, next_frame_flt);
             quadrado = trataModelo(quadrado, 0.9);
@@ -184,7 +183,6 @@ int main(int argc, char* argv[]) {
                     } else {
                         min_max.match_loc = min_max_normed.max_loc;
                     }
-                    found_box = true;
                     drawBox(next_size, quadrado, next_frame);
                     if ((WIDTH - min_max.match_loc.x) > 10 && (HEIGHT - min_max.match_loc.x) < (HEIGHT-10)) {
                         int cut = next_size * 0.4;
@@ -268,27 +266,25 @@ int main(int argc, char* argv[]) {
                             client.sendUint(result_recon);
                             std::cout << "Detectou número: " << result_recon << std::endl;
                         } else {
-                            client.sendUint(30);
+                            client.sendUint(15);
                             std::cout << "Não detectou número" << std::endl;
                         }
                     } else {
-                        found_box = false;
                         client.sendUint(30);
                         std::cout << "Placa ta muito perto" << std::endl;
                     }
                 } else {
                     client.sendUint(30);
+                    std::cout << "Não tem placa" << std::endl;
                 }
             } else {
-                found_box = false;
                 client.sendUint(30);
                 std::cout << "Não tem placa" << std::endl;
             }
-            // client.receiveUint(finished);
         } else if (mode == 2) {
             client.sendUint(gui.getEstado());
             // putText(next_frame, "M", Point(20, 220), 0, 2, Scalar(0, 0, 255), 1, 8);
-            putText(gui_window_temp, "M", Point(120, 120), 0, 2, Scalar(0, 0, 255), 1, 8);
+            putText(gui_window_temp, "M", Point(120, 150), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 2, 8, true);
         }
         gui.setWindow(gui_window_temp);
 

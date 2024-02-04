@@ -42,7 +42,7 @@ void CARRINHO::stop()
 void CARRINHO::move_forward() {
     softPwmWrite(motor::esq_frente, speed::overdrive);
     softPwmWrite(motor::esq_tras, speed::stopspeed);
-    softPwmWrite(motor::dir_frente, speed::overdrive);
+    softPwmWrite(motor::dir_frente, speed::overdrive - compensa);
     softPwmWrite(motor::dir_tras, speed::stopspeed);
 }
 
